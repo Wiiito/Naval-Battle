@@ -1,8 +1,6 @@
-#include <SFML/Graphics.hpp>
-#include <iostream>
-
-#include "src/engine.cpp"
+// All obj definition files have to be included here
 #include "src/game.cpp"
+#include "src/players.cpp"
 
 int main() {
     game();

@@ -1,53 +1,30 @@
-class DoubleBoat {
-   private:
-    /* data */
-   public:
-    DoubleBoat(/* args */);
-    ~DoubleBoat();
-};
+#include "header.hpp"
 
+// Double boat
 DoubleBoat::DoubleBoat(/* args */) {
 }
 
 DoubleBoat::~DoubleBoat() {
 }
 
-class TripleBoat {
-   private:
-    /* data */
-   public:
-    TripleBoat(/* args */);
-    ~TripleBoat();
-};
 
+// Triple boat
 TripleBoat::TripleBoat(/* args */) {
 }
 
 TripleBoat::~TripleBoat() {
 }
 
-class QuadraBoat {
-   private:
-    /* data */
-   public:
-    QuadraBoat(/* args */);
-    ~QuadraBoat();
-};
 
+// Quadra boat
 QuadraBoat::QuadraBoat(/* args */) {
 }
 
 QuadraBoat::~QuadraBoat() {
 }
 
-class QuintaBoat {
-   private:
-    /* data */
-   public:
-    QuintaBoat(/* args */);
-    ~QuintaBoat();
-};
 
+// Quinta boat
 QuintaBoat::QuintaBoat(/* args */) {
 }
 

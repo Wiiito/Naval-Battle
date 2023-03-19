@@ -1,12 +1,7 @@
-class Player {
-   private:
-    /* data */
-   public:
-    Player(/* args */);
-    ~Player();
-};
+#include "header.hpp"
 
 Player::Player(/* args */) {
+    
 }
 
 Player::~Player() {
