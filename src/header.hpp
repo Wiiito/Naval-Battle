@@ -1,50 +1,50 @@
 // Header archive
-#pragma once // To reduce build times to 1 only
+#pragma once  // To reduce build times to 1 only
 #include <SFML/Graphics.hpp>
+
 using namespace sf;
 
 class DoubleBoat {
-    private:
+   private:
     /* data */
 
-    public:
+   public:
     DoubleBoat(/* args */);
     ~DoubleBoat();
 };
 
-
 class TripleBoat {
-    private:
+   private:
     /* data */
 
-    public:
+   public:
     TripleBoat(/* args */);
     ~TripleBoat();
 };
 
 class QuadraBoat {
-    private:
+   private:
     /* data */
 
-    public:
+   public:
     QuadraBoat(/* args */);
     ~QuadraBoat();
 };
 
 class QuintaBoat {
-    private:
+   private:
     /* data */
 
-    public:
+   public:
     QuintaBoat(/* args */);
     ~QuintaBoat();
 };
 
 class Player {
-    private:
+   private:
     /* data */
 
-    public:
+   public:
     Player(/* args */);
     ~Player();
 };
@@ -52,3 +52,6 @@ class Player {
 RenderWindow window(VideoMode(800, 600), "Naval Battle", Style::Titlebar | Style::Close);
 Event event;
 Player player;
+
+// Declarando fontes
+Font font;

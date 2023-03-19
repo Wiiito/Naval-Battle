@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
 #include "src/game.cpp"
 #include "src/players.cpp"
@@ -10,8 +9,13 @@ int main() {
     CircleShape shape(200.f);
     shape.setFillColor(Color::Black);
 
+    font.loadFromFile("src/assets/fonts/Montserrat.OTF");
+
+    window.setKeyRepeatEnabled(false);
+
+    // Fontes
+
     while (window.isOpen()) {
-        Event ev;
         // "Loop" do menu
         switch (controlPanel) {
             case 0:
@@ -21,7 +25,7 @@ int main() {
                 break;
 
             default:
-                menu(ev);
+                menu();
                 break;
         }
     }
