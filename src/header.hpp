@@ -4,40 +4,13 @@
 
 using namespace sf;
 
-class DoubleBoat {
+class Boat {
    private:
     /* data */
 
    public:
-    DoubleBoat(/* args */);
-    ~DoubleBoat();
-};
-
-class TripleBoat {
-   private:
-    /* data */
-
-   public:
-    TripleBoat(/* args */);
-    ~TripleBoat();
-};
-
-class QuadraBoat {
-   private:
-    /* data */
-
-   public:
-    QuadraBoat(/* args */);
-    ~QuadraBoat();
-};
-
-class QuintaBoat {
-   private:
-    /* data */
-
-   public:
-    QuintaBoat(/* args */);
-    ~QuintaBoat();
+    Boat(/* args */);
+    ~Boat();
 };
 
 class Player {
@@ -55,3 +28,13 @@ Player player;
 
 // Declarando fontes
 Font font;
+Text createText(String text, int posX, int posY);
+
+// Declarando coisinhas da minha lib
+bool isClickBetween(Vector2i click, Vector2i iniPos, Vector2i finalPos);
+
+// Mouse pos
+
+
+#include "lib/positions.cpp"
+#include "singleCall.cpp"
