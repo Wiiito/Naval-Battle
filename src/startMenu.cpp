@@ -16,12 +16,19 @@ void menu() {
     }
 
     // Por algum motivo, quando declarado fora daqui, a origem do texto não muda
-    Text start = createText("START", 400, 300);
-    Text settings = createText("SETTINGS", 400, 380);
-    Text quit = createText("QUIT", 400, 460);
+    Text start = createText("START", midWindowWidth, midWindowHeight + 80 * 0);
+    Text settings = createText("SETTINGS", midWindowWidth, midWindowHeight + 80 * 1);
+    Text quit = createText("QUIT", midWindowWidth, midWindowHeight + 80 * 2);
 
+    // Vendo se o usuario clicou em algum botão
     if (isClickBetween(mousePos, getInitialPos(start), getFinalPos(start))) {
+        controlPanel = 0;
+    }
+    if (isClickBetween(mousePos, getInitialPos(settings), getFinalPos(settings))) {
         controlPanel = 1;
+    }
+    if (isClickBetween(mousePos, getInitialPos(quit), getFinalPos(quit))) {
+        controlPanel = 2;
     }
 
     window.clear(Color::White);

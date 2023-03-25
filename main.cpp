@@ -5,7 +5,6 @@
 #include "src/startMenu.cpp"
 
 int main() {
-    int controlPanel = 1;
     window.setKeyRepeatEnabled(false);
 
     // Fontes
@@ -15,8 +14,11 @@ int main() {
         // "Loop" do menu
         switch (controlPanel) {
             case 0:
-
+                game();
                 break;
+
+            case 2:
+                window.close();
 
             default:
                 menu();

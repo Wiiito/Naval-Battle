@@ -22,9 +22,20 @@ class Player {
     ~Player();
 };
 
-RenderWindow window(VideoMode(800, 600), "Naval Battle", Style::Titlebar | Style::Close);
+RenderWindow window(VideoMode::getDesktopMode(), "Naval Battle", Style::Fullscreen /*Titlebar | Style::Close*/);
+int controlPanel = 3;
 Event event;
 Player player;
+
+// Window variables
+Vector2u windowSize = window.getSize();
+int windowWidth = windowSize.x;
+int windowHeight = windowSize.y;
+
+// This will be used so the code is more legible
+
+int midWindowWidth = windowWidth / 2;
+int midWindowHeight = windowHeight / 2;
 
 // Declarando fontes
 Font font;
@@ -34,7 +45,6 @@ Text createText(String text, int posX, int posY);
 bool isClickBetween(Vector2i click, Vector2i iniPos, Vector2i finalPos);
 
 // Mouse pos
-
 
 #include "lib/positions.cpp"
 #include "singleCall.cpp"
