@@ -30,7 +30,7 @@ Text createText(String text, int posX, int posY, int textSize, String orientatio
 }
 
 void drawArrowValues(Vector2i mousePos, int *variable, Text text) {
-    /*Vector2i textEnd(getFinalPos(text).x, getFinalPos(text).y - text.getLocalBounds().height);
+    Vector2i textEnd(getFinalPos(text).x, getFinalPos(text).y - text.getLocalBounds().height);
 
     // Criando a sete de cima
     Text upArrow = createText("<", textEnd.x, textEnd.y, text.getCharacterSize() / 1.5);
@@ -45,13 +45,13 @@ void drawArrowValues(Vector2i mousePos, int *variable, Text text) {
     downArrow.move(downArrow.getLocalBounds().height * 1.25, downArrow.getLocalBounds().width * 3.25);
     downArrow.setRotation(90.f);
 
-    if (isClickBetween(mousePos, getInitialPos(upArrow), getFinalPos(upArrow))) {
+    if (isClickBetween(mousePos, upArrow)) {
         (*variable)++;
     }
-    if (isClickBetween(mousePos, getInitialPos(downArrow), getFinalPos(downArrow))) {
+    if (isClickBetween(mousePos, downArrow)) {
         (*variable)--;
     }
 
     window.draw(upArrow);
-    window.draw(downArrow);*/
+    window.draw(downArrow);
 }

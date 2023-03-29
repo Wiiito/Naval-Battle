@@ -43,6 +43,7 @@ Text createText(String text, int posX, int posY, int textSize, String locale = "
 
 // Declarando coisinhas da minha lib
 bool isClickBetween(Vector2i click, Sprite object);
+// bool isClickBetween(Vector2i click, Text object);
 
 // ---- Inicio Menu ----
 // Declarando imagens Menu
@@ -53,6 +54,13 @@ Sprite menuBgSprite;
 Texture btnTx;
 Sprite btnSprite;
 
+// Configurações
+Texture settingsTx;
+Sprite settingsSprite;
+
+// Quit
+Texture quitTx;
+Sprite quitSprite;
 // ---- Fim Menu ----
 
 // Game

@@ -42,3 +42,7 @@ Para compilar rode
 **Back-end:** Pure c++
 
 **Compilação**: make
+
+## Dependências
+
+ - [TinyXML2](https://github.com/terroo/tinyxml2/)
