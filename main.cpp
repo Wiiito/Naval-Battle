@@ -5,6 +5,7 @@
 #include "src/players.cpp"
 #include "src/settings.cpp"
 #include "src/startMenu.cpp"
+#include "src/rockets.cpp"
 
 int main() {
     initializeVar();

@@ -9,6 +9,7 @@ void game() {
         }
 
         window.clear(Color::White);
+        rocket.draw();
         window.display();
     }
 }

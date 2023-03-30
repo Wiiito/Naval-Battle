@@ -5,13 +5,18 @@
 
 using namespace sf;
 
-class Boat {
+class Rocket {
    private:
-    /* data */
+    int type;
+    int orient;
+    Sprite rocket[5];
+    void makeRocketBody();
+    int spritePosX;
 
    public:
-    Boat(/* args */);
-    ~Boat();
+    Rocket(int type, int orient);
+    void draw();
+    ~Rocket() { };
 };
 
 class Player {
@@ -24,9 +29,13 @@ class Player {
 };
 
 RenderWindow window(VideoMode::getDesktopMode(), "Naval Battle", Style::Fullscreen /*Titlebar | Style::Close*/);
-int controlPanel = 4;
 Event event;
+Texture texture;
+int textureOffset = 32;
+
+int controlPanel = 4;
 Player player;
+Rocket rocket(4, 0);
 
 // Window variables
 Vector2u windowSize = window.getSize();
@@ -66,10 +75,11 @@ Sprite quitSprite;
 // Game
 int sizeBoardX = 10;
 int sizeBoardY = 10;
+int windowOffset = 32;
 
 int *board = (int *)malloc(sizeof(int) * sizeBoardX * sizeBoardY);
 
-int boats[] = {4, 3, 2, 1};  // Barcos com 2,3,4,5 quadrados
+int rockets[] = {4, 3, 2, 1};  // Barcos com 2,3,4,5 quadrado
 int bombs = 50;
 
 #include "lib/positions.cpp"
