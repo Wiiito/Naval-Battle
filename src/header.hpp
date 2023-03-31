@@ -3,6 +3,9 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+#include "lang/tinyxml2.cpp"
+#include "lang/tinyxml2.h"
+
 using namespace sf;
 
 class Rocket {
@@ -47,8 +50,12 @@ int midWindowWidth = windowWidth / 2;
 int midWindowHeight = windowHeight / 2;
 
 // Declarando fontes
-Font font;
-Text createText(String text, int posX, int posY, int textSize, String locale = "left");
+Font fontAnteb;
+Font fontBlanka;
+Font fontJedi;
+
+// Função criação texto
+Text createText(String text, int posX, int posY, int textSize, Color color, String fontAtr = "Anteb", String locale = "left");
 
 // Declarando coisinhas da minha lib
 bool isClickBetween(Vector2i click, Sprite object);
@@ -71,6 +78,18 @@ Sprite settingsSprite;
 Texture quitTx;
 Sprite quitSprite;
 // ---- Fim Menu ----
+
+// ---- XML Parser ----
+void updateText();
+
+// Texts
+// Coders
+Text codersText;
+Text codersTextShadow;
+
+// Title
+Text titleText;
+Text titleTextShadow;
 
 // Game
 int sizeBoardX = 10;

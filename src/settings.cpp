@@ -1,7 +1,7 @@
 #include "header.hpp"
 
 void settings() {
-    Vector2i mousePos;
+    /*Vector2i mousePos;
 
     while (window.pollEvent(event)) {
         if (event.type == Event::Closed)
@@ -15,9 +15,9 @@ void settings() {
     window.clear(Color::White);
     window.draw(backText);
 
-    /*if (isClickBetween(mousePos, getInitialPos(backText), getFinalPos(backText))) {
+    if (isClickBetween(mousePos, getInitialPos(backText), getFinalPos(backText))) {
         controlPanel = 3;
-    }*/
+    }
 
     // Bombas
     Text bombsText = createText("Bombs: ", windowWidth / 8, 8, 4);
@@ -30,4 +30,5 @@ void settings() {
     // Tabuleiro
 
     window.display();
+    */
 }

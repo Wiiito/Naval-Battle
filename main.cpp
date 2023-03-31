@@ -12,9 +12,6 @@ int main() {
     window.setKeyRepeatEnabled(false);
     window.setFramerateLimit(60);
 
-    // Fontes
-    font.loadFromFile("src/assets/fonts/Montserrat.OTF");
-
     while (window.isOpen()) {
         // "Loop" do menu
         switch (controlPanel) {

@@ -25,9 +25,17 @@ void menu() {
     }
 
     window.clear();
+
+    // Buttons
     window.draw(menuBgSprite);
     window.draw(btnSprite);
     window.draw(settingsSprite);
     window.draw(quitSprite);
+    // Title
+    window.draw(titleTextShadow);
+    window.draw(titleText);
+    window.draw(codersTextShadow);
+    window.draw(codersText);
+
     window.display();
 }

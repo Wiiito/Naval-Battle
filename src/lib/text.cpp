@@ -12,12 +12,14 @@ int fs = (int)(windowHeight / 67.5);
 
 // int buttonTextSize = (midWindowHeight - 80) / 3;  // 60 = 20 de espaçamento * 3 + 20 no final pra não ficar colado
 
-Text createText(String text, int posX, int posY, int textSize, String orientation) {
+Text createText(String text, int posX, int posY, int textSize, Color color, String fontAtr, String orientation) {
     Text startText;
-    startText.setFont(font);
+    if (fontAtr == "Anteb") startText.setFont(fontAnteb);
+    if (fontAtr == "Blanka") startText.setFont(fontBlanka);
+    if (fontAtr == "Jedi") startText.setFont(fontJedi);
     startText.setString(text);
     startText.setCharacterSize(textSize * fs);
-    startText.setFillColor(Color::White);
+    startText.setFillColor(color);
     startText.setStyle(Text::Bold);
     if (orientation == "middle")
         startText.setOrigin(startText.getLocalBounds().width / 2, 0 /*startText.getLocalBounds().height / 2*/);
@@ -30,7 +32,7 @@ Text createText(String text, int posX, int posY, int textSize, String orientatio
 }
 
 void drawArrowValues(Vector2i mousePos, int *variable, Text text) {
-    Vector2i textEnd(getFinalPos(text).x, getFinalPos(text).y - text.getLocalBounds().height);
+    /*Vector2i textEnd(getFinalPos(text).x, getFinalPos(text).y - text.getLocalBounds().height);
 
     // Criando a sete de cima
     Text upArrow = createText("<", textEnd.x, textEnd.y, text.getCharacterSize() / 1.5);
@@ -53,5 +55,8 @@ void drawArrowValues(Vector2i mousePos, int *variable, Text text) {
     }
 
     window.draw(upArrow);
-    window.draw(downArrow);
+    window.draw(downArrow);*/
 }
+
+// String getText(string text) {
+// }
