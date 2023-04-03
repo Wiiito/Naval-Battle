@@ -1,12 +1,36 @@
 <gameTexts>
-  <lastLang>pt-br</lastLang>
-  <coders>ELLIS, ERICK E FLAVIO</coders>
-  <languages>
-    <en>
-      <title>STAR WARS</title>
-    </en>
-    <pt-br>
-      <title>BATALHA ESPACIAL</title>
-    </pt-br>
-  </languages>
+    <lastLang>Deutsch</lastLang>
+    <coders>ELLIS, ERICK E FLAVIO</coders>
+    <languages>
+        <English>
+            <title>STAR WARS</title>
+            <name>English</name>
+            <language>LANGUAGES</language>
+            <acronym>en</acronym>
+        </English>
+        <Portugues>
+            <title>BATALHA ESPACIAL</title>
+            <name>Portugues</name>
+            <language>IDIOMAS</language>
+            <acronym>pt</acronym>
+        </Portugues>
+        <Espanol>
+            <title>BATALLA ESPACIAL</title>
+            <name>Espanol</name>
+            <language>IDIOMAS</language>
+            <acronym>es</acronym>
+        </Espanol>
+        <Italiano>
+            <title>GUERRE STELLARI</title>
+            <name>Italiano</name>
+            <language>Le lingue</language>
+            <acronym>it</acronym>
+        </Italiano>
+        <Deutsch>
+            <title>KRIEG DER STERNE</title>
+            <name>Deutsch</name>
+            <language>Redewendung</language>
+            <acronym>de</acronym>
+        </Deutsch>
+    </languages>
 </gameTexts>

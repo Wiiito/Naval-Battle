@@ -2,10 +2,11 @@
 
 #include "src/game.cpp"
 #include "src/initializeVariables.cpp"
+#include "src/languageMenu.cpp"
 #include "src/players.cpp"
+#include "src/rockets.cpp"
 #include "src/settings.cpp"
 #include "src/startMenu.cpp"
-#include "src/rockets.cpp"
 
 int main() {
     initializeVar();
@@ -24,6 +25,10 @@ int main() {
                 break;
 
             case 2:
+                languagePanel();
+                break;
+
+            case 3:
                 window.close();
                 break;
 

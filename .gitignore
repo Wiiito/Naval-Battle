@@ -2,7 +2,6 @@
 /SFML
 
 main.o
-main.exe
 openal32.dll
 sfml-audio-d-2.dll
 sfml-audio-2.dll

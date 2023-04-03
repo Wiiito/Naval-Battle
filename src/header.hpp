@@ -2,6 +2,7 @@
 #pragma once  // To reduce build times to 1 only
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
 
 #include "lang/tinyxml2.cpp"
 #include "lang/tinyxml2.h"
@@ -19,7 +20,7 @@ class Rocket {
    public:
     Rocket(int type, int orient);
     void draw();
-    ~Rocket() { };
+    ~Rocket(){};
 };
 
 class Player {
@@ -53,6 +54,7 @@ int midWindowHeight = windowHeight / 2;
 Font fontAnteb;
 Font fontBlanka;
 Font fontJedi;
+Font fontMontserrat;
 
 // Função criação texto
 Text createText(String text, int posX, int posY, int textSize, Color color, String fontAtr = "Anteb", String locale = "left");
@@ -65,24 +67,7 @@ bool isClickBetween(Vector2i click, Sprite object);
 // Declarando imagens Menu
 Texture menuBgTx;
 Sprite menuBgSprite;
-
-// Botão
-Texture btnTx;
-Sprite btnSprite;
-
-// Configurações
-Texture settingsTx;
-Sprite settingsSprite;
-
-// Quit
-Texture quitTx;
-Sprite quitSprite;
-// ---- Fim Menu ----
-
-// ---- XML Parser ----
-void updateText();
-
-// Texts
+// -- Texts --
 // Coders
 Text codersText;
 Text codersTextShadow;
@@ -90,6 +75,65 @@ Text codersTextShadow;
 // Title
 Text titleText;
 Text titleTextShadow;
+
+// Language Text
+Text languageText;
+
+// -- Botões --
+// Start
+Texture btnTx;
+Sprite btnSprite;
+
+// Configurações
+Texture settingsTx;
+Sprite settingsSprite;
+
+// Bandeiras Paises
+Texture countryFlagTx;
+Sprite countryFlagSprite;
+
+// Quit
+Texture quitTx;
+Sprite quitSprite;
+
+// ---- Fim Menu ----
+
+// ---- Inicio Language Settings ----
+// Card linguagens / Backgound
+Texture languageCardTx;
+Sprite languageCardSprite;
+
+Texture languageBackButtonTx;
+Sprite languageBackButtonSprite;
+
+// Idioma Text
+Text languageTitleText;
+
+Texture inUseTexture;
+Sprite inDrawSprite;
+
+// ---- XML Parser ----
+// Declarando file para salva-la
+tinyxml2::XMLDocument doc;
+
+// Change language
+std::string language;
+
+// Changing lang on the xml
+tinyxml2::XMLElement *pLastLang;
+
+// Acesso a linguagens em todo o programa
+tinyxml2::XMLElement *pLanguages;
+
+std::vector<RectangleShape *> languageBackgrounds;
+
+// Para não ter um conjunto absurdo de extrações pra cada linguagem,
+// resolvi criar um array pra armazenas seus nomes
+std::vector<Text *> languagesNames;
+
+// ---- Fim Language Settings ----
+
+void updateText();
 
 // Game
 int sizeBoardX = 10;

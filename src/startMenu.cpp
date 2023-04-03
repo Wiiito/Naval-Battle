@@ -14,14 +14,17 @@ void menu() {
         }
     }
 
-    if (isClickBetween(mousePos, btnSprite)) {
+    if (isClickBetween(mousePos, btnSprite)) {  // Start game
         controlPanel = 0;
     }
-    if (isClickBetween(mousePos, settingsSprite)) {
+    if (isClickBetween(mousePos, settingsSprite)) {  // Settings
         controlPanel = 1;
     }
-    if (isClickBetween(mousePos, quitSprite)) {
+    if (isClickBetween(mousePos, languageText) || isClickBetween(mousePos, countryFlagSprite)) {  // Language
         controlPanel = 2;
+    }
+    if (isClickBetween(mousePos, quitSprite)) {  // Quit
+        controlPanel = 3;
     }
 
     window.clear();
@@ -31,6 +34,8 @@ void menu() {
     window.draw(btnSprite);
     window.draw(settingsSprite);
     window.draw(quitSprite);
+    window.draw(languageText);
+    window.draw(countryFlagSprite);
     // Title
     window.draw(titleTextShadow);
     window.draw(titleText);

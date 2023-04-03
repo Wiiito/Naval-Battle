@@ -14,9 +14,12 @@ int fs = (int)(windowHeight / 67.5);
 
 Text createText(String text, int posX, int posY, int textSize, Color color, String fontAtr, String orientation) {
     Text startText;
+
     if (fontAtr == "Anteb") startText.setFont(fontAnteb);
     if (fontAtr == "Blanka") startText.setFont(fontBlanka);
     if (fontAtr == "Jedi") startText.setFont(fontJedi);
+    if (fontAtr == "Montserrat") startText.setFont(fontMontserrat);
+
     startText.setString(text);
     startText.setCharacterSize(textSize * fs);
     startText.setFillColor(color);
@@ -57,6 +60,3 @@ void drawArrowValues(Vector2i mousePos, int *variable, Text text) {
     window.draw(upArrow);
     window.draw(downArrow);*/
 }
-
-// String getText(string text) {
-// }

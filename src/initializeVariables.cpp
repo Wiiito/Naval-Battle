@@ -7,6 +7,7 @@ void initializeVar() {
     fontAnteb.loadFromFile("src/assets/fonts/Anteb-Regular.ttf");
     fontBlanka.loadFromFile("src/assets/fonts/Blanka-Regular.otf");
     fontJedi.loadFromFile("src/assets/fonts/STARJEDI.TTF");
+    fontMontserrat.loadFromFile("src/assets/fonts/Montserrat.OTF");
 
     //  Menu Background
     menuBgTx.loadFromFile("src/assets/menuBackground.png");
@@ -36,36 +37,129 @@ void initializeVar() {
     quitSprite.setOrigin(quitSprite.getLocalBounds().width, quitSprite.getLocalBounds().height);
     quitSprite.setPosition(windowWidth * 98 / 100, windowHeight * 96 / 100);
 
+    //  Language change card
+    languageCardTx.loadFromFile("src/assets/languageCard.png");
+    languageCardSprite.setTexture(languageCardTx);
+    languageCardSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+    languageCardSprite.setOrigin(languageCardSprite.getLocalBounds().width / 2, languageCardSprite.getLocalBounds().height / 2);
+    languageCardSprite.setPosition(midWindowWidth, midWindowHeight);
+
+    // Language Settings base sprite
+    inDrawSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+    inDrawSprite.setOrigin(inDrawSprite.getLocalBounds().width / 2, inDrawSprite.getLocalBounds().height / 2);
+
+    // Language Back Button
+    languageBackButtonTx.loadFromFile("src/assets/backButton.png");
+    languageBackButtonSprite.setTexture(languageBackButtonTx);
+    languageBackButtonSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+    languageBackButtonSprite.setOrigin(languageBackButtonSprite.getLocalBounds().width / 2, languageBackButtonSprite.getLocalBounds().height / 2);
+    languageBackButtonSprite.setPosition(windowWidth * 33 / 100, windowHeight * 8 / 10);
+
     updateText();  // First generation of the text
 }
 
 void updateText() {
-    tinyxml2::XMLDocument doc;  // Declarando aqui dentro pra quando sair da função, fechar
+    // ---- Start Extracting Info from xml ----
+
     doc.LoadFile("src/lang/languages.xml");
 
     tinyxml2::XMLElement *pRootElement = doc.RootElement();
-    tinyxml2::XMLElement *pLastLang = pRootElement->FirstChildElement("lastLang");  // Pegando a ultima lingua utilizada pelo usuario
+    pLastLang = pRootElement->FirstChildElement("lastLang");  // Pegando a ultima lingua utilizada pelo usuario
 
     std::string codersStr = pRootElement->FirstChildElement("coders")->GetText();
 
-    tinyxml2::XMLElement *pLanguages = pRootElement->FirstChildElement("languages");
+    pLanguages = pRootElement->FirstChildElement("languages");
     tinyxml2::XMLElement *selectedLang = pLanguages->FirstChildElement(pLastLang->GetText());
 
     // Saving pointers to string
-    std::string titleStr = selectedLang->FirstChildElement("title")->GetText();
+    language = pLanguages->FirstChildElement(pLastLang->GetText())->FirstChildElement("acronym")->GetText();
 
-    // Generating texts
-    // Coders
-    codersTextShadow = createText(codersStr, midWindowWidth * 90 / 100 + 2, windowHeight * 23 / 100 + 2, 2, Color::Black, "Anteb", "middle");
-    codersText = createText(codersStr, midWindowWidth * 90 / 100, windowHeight * 23 / 100, 2, Color::White, "Anteb", "middle");
+    String titleStr = selectedLang->FirstChildElement("title")->GetText();
+    String nameStr = selectedLang->FirstChildElement("name")->GetText();
+    String languageStr = selectedLang->FirstChildElement("language")->GetText();
 
+    // ---- End Extracting Info from xml ----
+
+    // ---- Generating Menu texts ----
     // Title
-    std::string language = pLastLang->GetText();
     if (language == "en") {
         titleTextShadow = createText(titleStr, midWindowWidth * 90 / 100 + 4, windowHeight * 10 / 100 + 4, 8, Color::Black, "Jedi", "middle");
         titleText = createText(titleStr, midWindowWidth * 90 / 100, windowHeight * 10 / 100, 8, Color::White, "Jedi", "middle");
     } else {
         titleTextShadow = createText(titleStr, midWindowWidth * 90 / 100 + 4, windowHeight * 10 / 100 + 4, 8, Color::Black, "Blanka", "middle");
         titleText = createText(titleStr, midWindowWidth * 90 / 100, windowHeight * 10 / 100, 8, Color::White, "Blanka", "middle");
+    }
+
+    // Coders
+    codersTextShadow = createText(codersStr, midWindowWidth * 90 / 100 + 2, windowHeight * 23 / 100 + 2, 2, Color::Black, "Anteb", "middle");
+    codersText = createText(codersStr, midWindowWidth * 90 / 100, windowHeight * 23 / 100, 2, Color::White, "Anteb", "middle");
+
+    // Language
+    std::string languageToUpper = language;  // Não to mudando a language porquê ela vai ser usada pra mudar a linguagem em lowerCase
+    for (int i = 0; i < language.size(); i++) {
+        languageToUpper[i] = toupper(language[i]);
+    }
+    languageText = createText(languageToUpper, windowWidth * 95 / 100, windowHeight * 3 / 100, 2, Color::White, "Montserrat", "Right");
+
+    // Language Title Text
+    languageTitleText = createText(languageStr, midWindowWidth, midWindowWidth * 23 / 100, 4, Color::Black, "Blanka", "middle");
+
+    // ---- End Menu Texts Generation ----
+
+    // ---- Bandeira em uso ----
+    // Colocando a bandeira aqui pra ela atualizar assim que a linguagem mudar
+    countryFlagTx.loadFromFile("src/assets/flags/" + nameStr + ".png");
+    countryFlagSprite.setTexture(countryFlagTx);
+    countryFlagSprite.setScale((float)windowWidth * 0.8 / 1920, (float)windowHeight * 0.8 / 1080);
+    countryFlagSprite.setOrigin(countryFlagSprite.getLocalBounds().width, 0);
+    countryFlagSprite.setPosition(getInitialPos(languageText).x, getInitialPos(languageText).y - 4);
+
+    // ---- Fim bandeira em uso ----
+
+    // ---- Language Backgrounds ----
+    tinyxml2::XMLElement *pLanguage = pLanguages->FirstChildElement();
+
+    // Limpando memoria pra evitar leaks
+    for (int i = 0; i < languagesNames.size(); i++) {
+        delete languageBackgrounds[i];
+        delete languagesNames[i];
+    }
+
+    languageBackgrounds.clear();  // Limpando o vector quando muda a lingua
+    languagesNames.clear();       // Limpando linguagens pra não duplicar elas
+
+    // Diminuido o tamanho dos vetores pra evitar probmelas com .push_back()
+    languageBackgrounds.shrink_to_fit();
+    languagesNames.shrink_to_fit();
+
+    int control = 0;
+    while (pLanguage) {
+        // Colocando retangulos das linguagens a serem desenhadas dentro de um vector
+        RectangleShape *shape = new RectangleShape;
+        shape->setSize(Vector2f(midWindowWidth, 5 * fs));
+        shape->setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+        shape->setOrigin(shape->getLocalBounds().width / 2, 0);
+        shape->setPosition(midWindowWidth, (float)windowHeight * 320 / 1080 + 5.5 * fs * control);
+
+        // Mudando a opacidade da linguagem em uso
+        if (nameStr == pLanguage->FirstChildElement("name")->GetText()) {
+            shape->setFillColor(Color(255, 255, 255, 200));
+        } else {
+            shape->setFillColor(Color(255, 255, 255, 100));
+        }
+
+        // Array de textos
+        Text *langText = new Text;
+        *langText = createText(pLanguage->FirstChildElement("name")->GetText(),
+                               shape->getPosition().x + shape->getLocalBounds().width * shape->getScale().x / 2 - 2 * fs,
+                               shape->getPosition().y, 3, Color::Black, "Anteb", "right");
+
+        // Adicionando aos vetores
+        languageBackgrounds.push_back(shape);
+        languagesNames.push_back(langText);
+
+        // Passando para a proxima lingua
+        pLanguage = pLanguage->NextSiblingElement();
+        control++;
     }
 }
