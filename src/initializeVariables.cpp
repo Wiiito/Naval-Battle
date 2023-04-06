@@ -55,6 +55,9 @@ void initializeVar() {
     languageBackButtonSprite.setOrigin(languageBackButtonSprite.getLocalBounds().width / 2, languageBackButtonSprite.getLocalBounds().height / 2);
     languageBackButtonSprite.setPosition(windowWidth * 33 / 100, windowHeight * 8 / 10);
 
+    // Load signs texture
+    signsTexture.loadFromFile("src/assets/signs.png");
+
     updateText();  // First generation of the text
 }
 
@@ -132,11 +135,41 @@ void updateText() {
     languageBackgrounds.shrink_to_fit();
     languagesNames.shrink_to_fit();
 
-    int control = 0;
+    // ---- Inicio Settings Menu ----
+    settingsString = selectedLang->FirstChildElement("settings")->GetText();
+    bombsString = selectedLang->FirstChildElement("bombs")->GetText();
+
+    float leftBoarder = getInitialPos(languageCardSprite).x + 4 * fs;
+    float topBoarder = midWindowWidth * 23 / 100 + 7 * fs;
+
+    // Configurações
+    settingsTitle = createText(settingsString, midWindowWidth + 2 * fs, midWindowWidth * 23 / 100, 4, Color::Black, "Blanka", "middle");
+    // Bombas
+    bombsTextSettings = createText(bombsString, leftBoarder, topBoarder, 3, Color::Black);
+
+    // Esclusivos menu configurações
+
+    // Tabuleiro
+    boardText = createText(selectedLang->FirstChildElement("board")->GetText(), leftBoarder, topBoarder + 5 * fs, 3, Color::Black);
+    // Largura
+    boardWidthText = createText(selectedLang->FirstChildElement("width")->GetText(), leftBoarder + fs, topBoarder + 8 * fs, 3, Color::Black);
+    // Altura
+    boardHeightText = createText(selectedLang->FirstChildElement("height")->GetText(), leftBoarder + fs, topBoarder + 11 * fs, 3, Color::Black);
+    // Barcos
+    boatsText = createText(selectedLang->FirstChildElement("boats")->GetText(), leftBoarder, topBoarder + 15 * fs, 3, Color::Black);
+
+    twoBoatsTextTitle = createText("2", leftBoarder + 1.5 * fs, topBoarder + 18 * fs, 3, Color::Black);
+    threeBoatsTextTitle = createText("3", leftBoarder + 1.5 * fs, topBoarder + 20.5 * fs, 3, Color::Black);
+    fourBoatsTextTitle = createText("4", leftBoarder + 1.5 * fs, topBoarder + 23 * fs, 3, Color::Black);
+    fiveBoatsTextTitle = createText("5", leftBoarder + 1.5 * fs, topBoarder + 25.5 * fs, 3, Color::Black);
+
+    // ---- Fim Settings Menu ----
+
+    int control = 0;  // Todas as linguas
     while (pLanguage) {
         // Colocando retangulos das linguagens a serem desenhadas dentro de um vector
         RectangleShape *shape = new RectangleShape;
-        shape->setSize(Vector2f(midWindowWidth, 5 * fs));
+        shape->setSize(Vector2f(languageCardSprite.getLocalBounds().width - 8 * fs, 5 * fs));
         shape->setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
         shape->setOrigin(shape->getLocalBounds().width / 2, 0);
         shape->setPosition(midWindowWidth, (float)windowHeight * 320 / 1080 + 5.5 * fs * control);

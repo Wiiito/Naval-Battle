@@ -34,29 +34,32 @@ Text createText(String text, int posX, int posY, int textSize, Color color, Stri
     return startText;
 }
 
-void drawArrowValues(Vector2i mousePos, int *variable, Text text) {
-    /*Vector2i textEnd(getFinalPos(text).x, getFinalPos(text).y - text.getLocalBounds().height);
+void drawValuesChanger(Vector2i mousePos, int *variable, Text text) {
+    Vector2i textStart = getInitialPos(text);
+    Vector2i textEnd = getFinalPos(text);
 
-    // Criando a sete de cima
-    Text upArrow = createText("<", textEnd.x, textEnd.y, text.getCharacterSize() / 1.5);
+    Sprite upper;
+    Sprite lower;
 
-    upArrow.setOrigin(upArrow.getLocalBounds().width, upArrow.getLocalBounds().height);
-    upArrow.move(upArrow.getLocalBounds().height * 1.25, upArrow.getLocalBounds().width * 1.9);
-    upArrow.setRotation(90.f);
+    upper.setTexture(signsTexture);
+    lower.setTexture(signsTexture);
 
-    Text downArrow = createText(">", textEnd.x, textEnd.y, text.getCharacterSize() / 1.5);
+    upper.setTextureRect(IntRect(0, 0, 16, 16));
+    upper.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+    upper.setOrigin(Vector2f(0, 0));
+    upper.setPosition(textEnd.x + fs, textStart.y + fs);
+    window.draw(upper);
 
-    downArrow.setOrigin(downArrow.getLocalBounds().width, downArrow.getLocalBounds().height);
-    downArrow.move(downArrow.getLocalBounds().height * 1.25, downArrow.getLocalBounds().width * 3.25);
-    downArrow.setRotation(90.f);
+    lower.setTextureRect(IntRect(16, 0, 16, 16));
+    lower.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+    lower.setOrigin(Vector2f(0, 0));
+    lower.setPosition(textEnd.x + fs, textEnd.y + 0.5 * fs);
+    window.draw(lower);
 
-    if (isClickBetween(mousePos, upArrow)) {
+    if (isClickBetween(mousePos, upper)) {
         (*variable)++;
     }
-    if (isClickBetween(mousePos, downArrow)) {
+    if (isClickBetween(mousePos, lower)) {
         (*variable)--;
     }
-
-    window.draw(upArrow);
-    window.draw(downArrow);*/
 }

@@ -1,36 +1,66 @@
 <gameTexts>
-    <lastLang>Deutsch</lastLang>
+    <lastLang>Portugues</lastLang>
     <coders>ELLIS, ERICK E FLAVIO</coders>
     <languages>
         <English>
-            <title>STAR WARS</title>
-            <name>English</name>
-            <language>LANGUAGES</language>
             <acronym>en</acronym>
+            <name>English</name>
+            <title>STAR WARS</title>
+            <language>LANGUAGES</language>
+            <settings>SETTINGS</settings>
+            <bombs>Bombs</bombs>
+            <board>Board</board>
+            <width>Width</width>
+            <height>Height</height>
+            <boats>Boats</boats>
         </English>
         <Portugues>
-            <title>BATALHA ESPACIAL</title>
-            <name>Portugues</name>
-            <language>IDIOMAS</language>
             <acronym>pt</acronym>
+            <name>Portugues</name>
+            <title>BATALHA ESPACIAL</title>
+            <language>IDIOMAS</language>
+            <settings>Configuracoes</settings>
+            <bombs>Bombas</bombs>
+            <board>Tabuleiro</board>
+            <width>Largura</width>
+            <height>Altura</height>
+            <boats>Barcos</boats>
         </Portugues>
         <Espanol>
-            <title>BATALLA ESPACIAL</title>
-            <name>Espanol</name>
-            <language>IDIOMAS</language>
             <acronym>es</acronym>
+            <name>Espanol</name>
+            <title>BATALLA ESPACIAL</title>
+            <language>IDIOMAS</language>
+            <settings>AJUSTES</settings>
+            <bombs>Bombas</bombs>
+            <board>Junta</board>
+            <width>Larguta</width>
+            <height>Altura</height>
+            <boats>Barcos</boats>
         </Espanol>
         <Italiano>
-            <title>GUERRE STELLARI</title>
-            <name>Italiano</name>
-            <language>Le lingue</language>
             <acronym>it</acronym>
+            <name>Italiano</name>
+            <title>GUERRE STELLARI</title>
+            <language>Le lingue</language>
+            <settings>IMPOSTAZIONI</settings>
+            <bombs>Bombe</bombs>
+            <board>Asse</board>
+            <width>Larghezza</width>
+            <height>Altezza</height>
+            <boats>Barche</boats>
         </Italiano>
         <Deutsch>
-            <title>KRIEG DER STERNE</title>
-            <name>Deutsch</name>
-            <language>Redewendung</language>
             <acronym>de</acronym>
+            <name>Deutsch</name>
+            <title>KRIEG DER STERNE</title>
+            <language>Redewendung</language>
+            <settings>EINSTELLUNGEN</settings>
+            <bombs>Bomben</bombs>
+            <board>Planke</board>
+            <width>Breite</width>
+            <height>Hohe</height>
+            <boats>Boote</boats>
         </Deutsch>
     </languages>
 </gameTexts>

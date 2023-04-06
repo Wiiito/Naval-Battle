@@ -109,6 +109,7 @@ Sprite languageBackButtonSprite;
 // Idioma Text
 Text languageTitleText;
 
+// Sprite e textura para bandeiras
 Texture inUseTexture;
 Sprite inDrawSprite;
 
@@ -131,19 +132,38 @@ std::vector<RectangleShape *> languageBackgrounds;
 // resolvi criar um array pra armazenas seus nomes
 std::vector<Text *> languagesNames;
 
+void updateText();
 // ---- Fim Language Settings ----
 
-void updateText();
+// ---- Inicio Game settings ----
+// Strings (há textos que serão repeditos no jogo, declarando a string para não ter que extrair do xml 2x)
+std::string settingsString;
+std::string bombsString;
 
-// Game
+// Textos a serem desenhados
+Text settingsTitle;
+Text bombsTextSettings;
+Text boardText;
+Text boardWidthText;
+Text boardHeightText;
+Text boatsText;
+Text twoBoatsTextTitle;
+Text threeBoatsTextTitle;
+Text fourBoatsTextTitle;
+Text fiveBoatsTextTitle;
+
+// Sign texture
+Texture signsTexture;
+
+// Game Varibles
 int sizeBoardX = 10;
 int sizeBoardY = 10;
 int windowOffset = 32;
 
-int *board = (int *)malloc(sizeof(int) * sizeBoardX * sizeBoardY);
+std::vector<int> boatsQuantity = {4, 3, 2, 1};
+int bombsNumber = 50;
 
-int rockets[] = {4, 3, 2, 1};  // Barcos com 2,3,4,5 quadrado
-int bombs = 50;
+// ---- Fim Game settings ----
 
 #include "lib/positions.cpp"
 #include "lib/text.cpp"
