@@ -45,10 +45,5 @@ void game() {
         }
     }
 
-    // for (int i = 0; i < Players.size(); i++) {
-    //     std::cout << "Player " << i << std::endl;
-    //     Players[i].printBoard();
-    // }
-
     window.display();
 }

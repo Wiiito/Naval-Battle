@@ -3,13 +3,16 @@
 
 #include "header.hpp"
 
-Rocket::Rocket(int type, int orient) {
+Rocket::Rocket(int type, int orient, Vector2i startPos) {
     this->type = type;
     this->orient = orient;
 
-    makeRocketBody();
+    // Setting positions to rocket
+    for (int i = 0; i < type; i++) {
+        positions.push_back(startPos + Vector2i(orient * i, !orient * i));
+    }
 
-    // Setting positions to boat
+    makeRocketBody();
 }
 
 void Rocket::makeRocketBody() {

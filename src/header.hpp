@@ -155,7 +155,7 @@ class Rocket {
     std::vector<Vector2i> positions;
 
    public:
-    Rocket(int type, int orient);
+    Rocket(int type, int orient, Vector2i startPos);
     void draw();
     ~Rocket(){};
 };
@@ -163,6 +163,7 @@ class Rocket {
 class Player {
    private:
     std::vector<std::vector<int>> board;
+    std::vector<Rocket *> rockets;
 
    public:
     Player(/* args */);
