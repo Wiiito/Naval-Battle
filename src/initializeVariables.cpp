@@ -1,8 +1,12 @@
+#include <time.h>
+
 #include "header.hpp"
 
-// Variables that need yo be initialized only one time will be here
+// Variables that need to be initialized only one time will be here
 
 void initializeVar() {
+    srand(time(NULL));  // Randomize rand() value
+
     // Fonte initialization
     fontAnteb.loadFromFile("src/assets/fonts/Anteb-Regular.ttf");
     fontBlanka.loadFromFile("src/assets/fonts/Blanka-Regular.otf");
@@ -57,6 +61,37 @@ void initializeVar() {
 
     // Load signs texture
     signsTexture.loadFromFile("src/assets/signs.png");
+
+    // ---- Game render ----
+    gameBackgroundTx.loadFromFile("src/assets/gameBackground.png");
+    gameBackgroundSprite.setTexture(gameBackgroundTx);
+    gameBackgroundSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+    gameBackgroundSprite.setOrigin(gameBackgroundSprite.getLocalBounds().width / 2, gameBackgroundSprite.getLocalBounds().height / 2);
+    gameBackgroundSprite.setPosition(midWindowWidth, midWindowHeight);
+
+    gamePlayersTx.loadFromFile("src/assets/players.png");
+
+    gameSinglePlayerSprite.setTexture(gamePlayersTx);
+    gameSinglePlayerSprite.setTextureRect(IntRect(0, 0, 402, 402));
+    gameSinglePlayerSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+    gameSinglePlayerSprite.setOrigin(gameSinglePlayerSprite.getLocalBounds().width / 2, gameSinglePlayerSprite.getLocalBounds().height / 2);
+    gameSinglePlayerSprite.setPosition(windowWidth * 1 / 3, midWindowHeight);
+
+    gameMultiPlayerSprite.setTexture(gamePlayersTx);
+    gameMultiPlayerSprite.setTextureRect(IntRect(402, 0, 402, 402));
+    gameMultiPlayerSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+    gameMultiPlayerSprite.setOrigin(gameMultiPlayerSprite.getLocalBounds().width / 2, gameMultiPlayerSprite.getLocalBounds().height / 2);
+    gameMultiPlayerSprite.setPosition(windowWidth * 2 / 3, midWindowHeight);
+
+    // Rockets texture
+    texture.loadFromFile("src/assets/sprites.png");
+
+    // Game Screen reference
+    gameScreenReferenceTexture.loadFromFile("src/assets/gameScreen.png");
+    gameScreenReference.setTexture(gameScreenReferenceTexture);
+    gameScreenReference.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+    gameScreenReference.setOrigin(gameScreenReference.getLocalBounds().width / 2, gameScreenReference.getLocalBounds().height / 2);
+    gameScreenReference.setPosition(midWindowWidth, midWindowHeight);
 
     updateText();  // First generation of the text
 }

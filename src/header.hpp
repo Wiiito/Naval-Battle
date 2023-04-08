@@ -9,37 +9,12 @@
 
 using namespace sf;
 
-class Rocket {
-   private:
-    int type;
-    int orient;
-    Sprite rocket[5];
-    void makeRocketBody();
-    int spritePosX;
-
-   public:
-    Rocket(int type, int orient);
-    void draw();
-    ~Rocket(){};
-};
-
-class Player {
-   private:
-    /* data */
-
-   public:
-    Player(/* args */);
-    ~Player();
-};
-
 RenderWindow window(VideoMode::getDesktopMode(), "Naval Battle", Style::Fullscreen /*Titlebar | Style::Close*/);
 Event event;
 Texture texture;
 int textureOffset = 32;
 
 int controlPanel = 4;
-Player player;
-Rocket rocket(4, 0);
 
 // Window variables
 Vector2u windowSize = window.getSize();
@@ -163,7 +138,48 @@ int windowOffset = 32;
 std::vector<int> boatsQuantity = {4, 3, 2, 1};
 int bombsNumber = 50;
 
+// Just a reference to draw game objects (will not be draw)
+Texture gameScreenReferenceTexture;
+Sprite gameScreenReference;
+
 // ---- Fim Game settings ----
+
+// ---- Game Objects ----
+class Rocket {
+   private:
+    int type;
+    int orient;
+    Sprite rocket[5];
+    void makeRocketBody();
+    int spritePosX;
+    std::vector<Vector2i> positions;
+
+   public:
+    Rocket(int type, int orient);
+    void draw();
+    ~Rocket(){};
+};
+
+class Player {
+   private:
+    std::vector<std::vector<int>> board;
+
+   public:
+    Player(/* args */);
+    void printBoard();
+    ~Player();
+};
+
+std::vector<Player> Players;
+// ---- End game Objects
+
+// ---- Game render screen ----
+Texture gameBackgroundTx;
+Sprite gameBackgroundSprite;
+
+Texture gamePlayersTx;
+Sprite gameSinglePlayerSprite;
+Sprite gameMultiPlayerSprite;
 
 #include "lib/positions.cpp"
 #include "lib/text.cpp"
