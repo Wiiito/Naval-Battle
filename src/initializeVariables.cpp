@@ -204,10 +204,10 @@ void updateText() {
     while (pLanguage) {
         // Colocando retangulos das linguagens a serem desenhadas dentro de um vector
         RectangleShape *shape = new RectangleShape;
-        shape->setSize(Vector2f(languageCardSprite.getLocalBounds().width - 8 * fs, 5 * fs));
-        shape->setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+        shape->setSize(Vector2f(languageCardSprite.getLocalBounds().width - 8 * fs, 4 * fs));
+        shape->setScale((float)windowWidth / 1920, 1);
         shape->setOrigin(shape->getLocalBounds().width / 2, 0);
-        shape->setPosition(midWindowWidth, (float)windowHeight * 320 / 1080 + 5.5 * fs * control);
+        shape->setPosition(midWindowWidth, (float)windowHeight * 320 / 1080 + 5 * fs * control);
 
         // Mudando a opacidade da linguagem em uso
         if (nameStr == pLanguage->FirstChildElement("name")->GetText()) {
