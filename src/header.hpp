@@ -145,6 +145,9 @@ Sprite gameScreenReference;
 // ---- Fim Game settings ----
 
 // ---- Game Objects ----
+
+// Casas do tabuleiro
+Vector2i boardSize;
 class Rocket {
    private:
     int type;
@@ -153,9 +156,11 @@ class Rocket {
     void makeRocketBody();
     int spritePosX;
     std::vector<Vector2i> positions;
+    std::vector<bool> hitsTaken;
 
    public:
     Rocket(int type, int orient, Vector2i startPos);
+    bool hit(Vector2i pos);
     void draw();
     ~Rocket(){};
 };
@@ -164,10 +169,12 @@ class Player {
    private:
     std::vector<std::vector<int>> board;
     std::vector<Rocket *> rockets;
+    void clearBoard();
 
    public:
     Player(/* args */);
     void printBoard();
+    bool hit(Vector2i pos);
     ~Player();
 };
 

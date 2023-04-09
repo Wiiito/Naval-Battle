@@ -11,9 +11,8 @@ Player::Player() {
 
     std::vector<int> boats = boatsQuantity;  // Clonando a boatsQuantity pra gerar os barcos
 
-    while (!boats.empty()) {
+    while (!boats.empty()) {  // Usando a matriz pra gerar os barcos
         int direction = rand() % 2;
-
         // Criando localizações a serem utilizadas, devem considerar a direção para a utilização da ultima casa
         int randX, randY;
         randX = rand() % (board.size() - boats.size() + !direction);
@@ -25,7 +24,6 @@ Player::Player() {
             Sequencia de um codigo genial (direction)
             E logo em seguida essa coisa feia ai de stop
         */
-
         // Checando se há elemento nas casas que o barco ocupara
         bool stop = false;
         for (int i = 0; i <= boats.size(); i++) {
@@ -47,6 +45,7 @@ Player::Player() {
             xAxis = randX + i * direction;
             yAxis = randY + i * !direction;
 
+            // Marcando arredores
             board[std::max(0, xAxis - 1)][yAxis] = 1;                                             // Casa a esquerda
             board[std::min(sizeBoardX - 1, xAxis + 1)][yAxis] = 1;                                // Casa a direita
             board[xAxis][std::max(0, yAxis - 1)] = 1;                                             // Casa de cima
@@ -64,18 +63,36 @@ Player::Player() {
             boats.pop_back();
             boats.shrink_to_fit();
         }
-        printBoard();
+    }
+
+    clearBoard();
+}
+
+void Player::clearBoard() {  // Limpa o tabuleiro
+    for (int i = 0; i < board.size(); i++) {
+        for (int j = 0; j < board[i].size(); j++) {
+            board[i][j] = 0;
+        }
     }
 }
 
-void Player::printBoard() {
-    for (int i = 0; i < board[0].size(); i++) {
-        for (int j = 0; j < board.size(); j++) {
-            std::cout << board[j][i] << " ";
+bool Player::hit(Vector2i pos) {  // Marca uma casa atingida
+    for (int i = 0; i < rockets.size(); i++) {
+        if (rockets[i]->hit(pos)) {
+            board[pos.x][pos.y] = 1;
+            return true;
         }
-        std::cout << std::endl;
     }
-    std::cout << std::endl;
+
+    // board[pos.x][pos.y] = 2;
+    // printBoard();
+    return false;
+}
+
+void Player::printBoard() {
+    for (int i = 0; i < rockets.size(); i++) {
+        rockets[i]->draw();
+    }
 }
 
 Player::~Player() {

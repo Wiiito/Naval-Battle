@@ -10,6 +10,7 @@ Rocket::Rocket(int type, int orient, Vector2i startPos) {
     // Setting positions to rocket
     for (int i = 0; i < type; i++) {
         positions.push_back(startPos + Vector2i(orient * i, !orient * i));
+        hitsTaken.push_back(false);
     }
 
     makeRocketBody();
@@ -19,14 +20,14 @@ void Rocket::makeRocketBody() {
     for (int pos = 0; pos < type; pos++) {
         rocket[pos].setTexture(texture);
         rocket[pos].setPosition(sf::Vector2f(
-            0 + pos * windowOffset * orient,
-            0 + windowOffset * orient + pos * windowOffset * !orient));
+            getInitialPos(gameScreenReference).x + 7 * fs + positions[pos].x * (boardSize.x / sizeBoardX),
+            getInitialPos(gameScreenReference).y + 2 * fs + positions[pos].y * (boardSize.y / sizeBoardY) + (boardSize.y / sizeBoardY) * orient));
 
         rocket[pos].setRotation(-90 * orient);
         // std::cout << (float)windowWidth << std::endl;
         rocket[pos].setScale(Vector2f(
-            (rocket[pos].getScale().x / textureOffset) * windowOffset,
-            (rocket[pos].getScale().y / textureOffset) * windowOffset));
+            (boardSize.x / sizeBoardX) / windowOffset,
+            (boardSize.y / sizeBoardY) / windowOffset));
 
         if (type == 2) {
             spritePosX = textureOffset;
@@ -44,8 +45,20 @@ void Rocket::makeRocketBody() {
     }
 }
 
+bool Rocket::hit(Vector2i pos) {
+    for (int i = 0; i < type; i++) {
+        if (pos == positions[i]) {
+            hitsTaken[i] = true;
+            return true;
+        }
+    }
+    return false;
+}
+
 void Rocket::draw() {
-    for (int pos = 0; pos < sizeof(rocket) / sizeof(sf::Sprite); pos++) {
-        window.draw(rocket[pos]);
+    for (int pos = 0; pos < type; pos++) {
+        if (hitsTaken[pos]) {
+            window.draw(rocket[pos]);
+        }
     }
 }
