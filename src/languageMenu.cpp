@@ -28,8 +28,8 @@ void languagePanel() {
         }
 
         // Desenhando bandeiras
-        inUseTexture.loadFromFile("src/assets/flags/" + currentCountryName + ".png");
-        inDrawSprite.setTexture(inUseTexture);
+        inDrawSprite.setTexture(flagsTexture);
+        inDrawSprite.setTextureRect(IntRect(i * flagsTextOffset, 0, flagsTextOffset, flagsTextOffset));
         inDrawSprite.setPosition(getInitialPos(*languageBackgrounds[i]).x + 2 * fs, languageBackgrounds[i]->getPosition().y);
 
         window.draw(*languageBackgrounds[i]);

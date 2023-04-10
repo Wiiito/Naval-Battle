@@ -24,10 +24,11 @@ void Rocket::makeRocketBody() {
             getInitialPos(gameScreenReference).y + 2 * fs + positions[pos].y * (boardSize.y / sizeBoardY) + (boardSize.y / sizeBoardY) * orient));
 
         rocket[pos].setRotation(-90 * orient);
-        // std::cout << (float)windowWidth << std::endl;
         rocket[pos].setScale(Vector2f(
-            (boardSize.x / sizeBoardX) / windowOffset,
-            (boardSize.y / sizeBoardY) / windowOffset));
+            (rocket[pos].getScale().x / textureOffset) * (windowOffset.x - 2) * !orient + (rocket[pos].getScale().y / textureOffset) * (windowOffset.y - 2) * orient,
+            (rocket[pos].getScale().y / textureOffset) * (windowOffset.y - 2) * !orient + (rocket[pos].getScale().x / textureOffset) * (windowOffset.x - 2) * orient
+        ));
+
 
         if (type == 2) {
             spritePosX = textureOffset;

@@ -2,10 +2,18 @@
 
 #include "header.hpp"
 
+#include <iostream>
+
 // Variables that need to be initialized only one time will be here
 
 void initializeVar() {
     srand(time(NULL));  // Randomize rand() value
+
+    // Game texture
+    texture.loadFromFile("src/assets/sprites.png");
+
+    // Flags texture
+    flagsTexture.loadFromFile("src/assets/flags.png");
 
     // Fonte initialization
     fontAnteb.loadFromFile("src/assets/fonts/Anteb-Regular.ttf");
@@ -21,22 +29,22 @@ void initializeVar() {
     menuBgSprite.setPosition(midWindowWidth, midWindowHeight);
 
     //  Menu Start Button
-    btnTx.loadFromFile("src/assets/startButton.png");
-    btnSprite.setTexture(btnTx);
+    btnSprite.setTexture(texture);
+    btnSprite.setTextureRect(IntRect(0, 3 * textureOffset, 9 * textureOffset, 3 * textureOffset));
     btnSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
     btnSprite.setOrigin(btnSprite.getLocalBounds().width / 2, btnSprite.getLocalBounds().height / 2);
     btnSprite.setPosition(midWindowWidth * 90 / 100, windowHeight * 78 / 100);
 
     //  Menu Settings Button
-    settingsTx.loadFromFile("src/assets/settings.png");
-    settingsSprite.setTexture(settingsTx);
+    settingsSprite.setTexture(texture);
+    settingsSprite.setTextureRect(IntRect(4 * textureOffset, 0, 2 * textureOffset, 2 * textureOffset));
     settingsSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
     settingsSprite.setOrigin(0, settingsSprite.getLocalBounds().height);
     settingsSprite.setPosition(windowWidth * 2 / 100, windowHeight * 96 / 100);
 
     //  Menu Settings Button
-    quitTx.loadFromFile("src/assets/quit.png");
-    quitSprite.setTexture(quitTx);
+    quitSprite.setTexture(texture);
+    quitSprite.setTextureRect(IntRect(6 * textureOffset, 0, 2 * textureOffset, 2 * textureOffset));
     quitSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
     quitSprite.setOrigin(quitSprite.getLocalBounds().width, quitSprite.getLocalBounds().height);
     quitSprite.setPosition(windowWidth * 98 / 100, windowHeight * 96 / 100);
@@ -53,14 +61,11 @@ void initializeVar() {
     inDrawSprite.setOrigin(inDrawSprite.getLocalBounds().width / 2, inDrawSprite.getLocalBounds().height / 2);
 
     // Language Back Button
-    languageBackButtonTx.loadFromFile("src/assets/backButton.png");
-    languageBackButtonSprite.setTexture(languageBackButtonTx);
+    languageBackButtonSprite.setTexture(texture);
+    languageBackButtonSprite.setTextureRect(IntRect(2 * textureOffset, 0, 2 * textureOffset, 2 * textureOffset));
     languageBackButtonSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
     languageBackButtonSprite.setOrigin(languageBackButtonSprite.getLocalBounds().width / 2, languageBackButtonSprite.getLocalBounds().height / 2);
     languageBackButtonSprite.setPosition(windowWidth * 33 / 100, windowHeight * 8 / 10);
-
-    // Load signs texture
-    signsTexture.loadFromFile("src/assets/signs.png");
 
     // ---- Game render ----
     gameBackgroundTx.loadFromFile("src/assets/gameBackground.png");
@@ -83,8 +88,6 @@ void initializeVar() {
     gameMultiPlayerSprite.setOrigin(gameMultiPlayerSprite.getLocalBounds().width / 2, gameMultiPlayerSprite.getLocalBounds().height / 2);
     gameMultiPlayerSprite.setPosition(windowWidth * 2 / 3, midWindowHeight);
 
-    // Rockets texture
-    texture.loadFromFile("src/assets/sprites.png");
 
     // Game Screen reference
     gameScreenReferenceTexture.loadFromFile("src/assets/gameScreen.png");
@@ -114,7 +117,11 @@ void updateText() {
 
     String titleStr = selectedLang->FirstChildElement("title")->GetText();
     String nameStr = selectedLang->FirstChildElement("name")->GetText();
+    int id;
+    selectedLang->QueryAttribute("id", &id);
     String languageStr = selectedLang->FirstChildElement("language")->GetText();
+
+    std::cout << id << std::endl;
 
     // ---- End Extracting Info from xml ----
 
@@ -146,8 +153,9 @@ void updateText() {
 
     // ---- Bandeira em uso ----
     // Colocando a bandeira aqui pra ela atualizar assim que a linguagem mudar
-    countryFlagTx.loadFromFile("src/assets/flags/" + nameStr + ".png");
-    countryFlagSprite.setTexture(countryFlagTx);
+
+    countryFlagSprite.setTexture(flagsTexture);
+    countryFlagSprite.setTextureRect(IntRect(id * flagsTextOffset, 0, flagsTextOffset, flagsTextOffset));
     countryFlagSprite.setScale((float)windowWidth * 0.8 / 1920, (float)windowHeight * 0.8 / 1080);
     countryFlagSprite.setOrigin(countryFlagSprite.getLocalBounds().width, 0);
     countryFlagSprite.setPosition(getInitialPos(languageText).x, getInitialPos(languageText).y - 4);

@@ -1,8 +1,8 @@
 <gameTexts>
-    <lastLang>Portugues</lastLang>
+    <lastLang>English</lastLang>
     <coders>ELLIS, ERICK E FLAVIO</coders>
     <languages>
-        <English>
+        <English id="0">
             <acronym>en</acronym>
             <name>English</name>
             <title>STAR WARS</title>
@@ -14,7 +14,7 @@
             <height>Height</height>
             <boats>Boats</boats>
         </English>
-        <Portugues>
+        <Portugues id="1">
             <acronym>pt</acronym>
             <name>Portugues</name>
             <title>BATALHA ESPACIAL</title>
@@ -26,7 +26,7 @@
             <height>Altura</height>
             <boats>Barcos</boats>
         </Portugues>
-        <Espanol>
+        <Espanol id="2">
             <acronym>es</acronym>
             <name>Espanol</name>
             <title>BATALLA ESPACIAL</title>
@@ -38,7 +38,7 @@
             <height>Altura</height>
             <boats>Barcos</boats>
         </Espanol>
-        <Italiano>
+        <Italiano id="3">
             <acronym>it</acronym>
             <name>Italiano</name>
             <title>GUERRE STELLARI</title>
@@ -50,7 +50,7 @@
             <height>Altezza</height>
             <boats>Barche</boats>
         </Italiano>
-        <Deutsch>
+        <Deutsch id="4">
             <acronym>de</acronym>
             <name>Deutsch</name>
             <title>KRIEG DER STERNE</title>

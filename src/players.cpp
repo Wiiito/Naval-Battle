@@ -1,6 +1,11 @@
 #include "header.hpp"
 
 Player::Player() {
+    windowOffset = Vector2i(
+        boardSize.x / sizeBoardX,
+        boardSize.y / sizeBoardY
+    );
+
     for (int i = 0; i < sizeBoardX; i++) {
         std::vector<int> vectorX;
         for (int j = 0; j < sizeBoardY; j++) {
@@ -17,6 +22,7 @@ Player::Player() {
         int randX, randY;
         randX = rand() % (board.size() - boats.size() + !direction);
         randY = rand() % (board[0].size() - boats.size() + direction);
+
 
         int lastIndice = boats.size() - 1;  // Pega o ultimo elemento do array do tamanho de barcos
 
@@ -83,9 +89,6 @@ bool Player::hit(Vector2i pos) {  // Marca uma casa atingida
             return true;
         }
     }
-
-    // board[pos.x][pos.y] = 2;
-    // printBoard();
     return false;
 }
 

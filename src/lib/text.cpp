@@ -41,17 +41,18 @@ void drawValuesChanger(Vector2i mousePos, int *variable, Text text) {
     Sprite upper;
     Sprite lower;
 
-    upper.setTexture(signsTexture);
-    lower.setTexture(signsTexture);
+    upper.setTexture(texture);
+    upper.setTextureRect(IntRect(2 * textureOffset, 2 * textureOffset, textureOffset, textureOffset));
 
-    upper.setTextureRect(IntRect(0, 0, 16, 16));
-    upper.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+    lower.setTexture(texture);
+    lower.setTextureRect(IntRect(3 * textureOffset, 2 * textureOffset, textureOffset, textureOffset));
+
+    upper.setScale((float)windowWidth * 0.5 / 1920, (float)windowHeight * 0.5 / 1080);
     upper.setOrigin(Vector2f(0, 0));
     upper.setPosition(textEnd.x + fs, textStart.y + fs);
     window.draw(upper);
 
-    lower.setTextureRect(IntRect(16, 0, 16, 16));
-    lower.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+    lower.setScale((float)windowWidth * 0.5 / 1920, (float)windowHeight * 0.5 / 1080);
     lower.setOrigin(Vector2f(0, 0));
     lower.setPosition(textEnd.x + fs, textEnd.y + 0.5 * fs);
     window.draw(lower);

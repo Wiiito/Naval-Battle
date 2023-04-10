@@ -12,6 +12,9 @@ using namespace sf;
 RenderWindow window(VideoMode::getDesktopMode(), "Naval Battle", Style::Fullscreen /*Titlebar | Style::Close*/);
 Event event;
 Texture texture;
+Texture flagsTexture;
+
+int flagsTextOffset = 64;
 int textureOffset = 32;
 
 int controlPanel = 4;
@@ -127,13 +130,10 @@ Text threeBoatsTextTitle;
 Text fourBoatsTextTitle;
 Text fiveBoatsTextTitle;
 
-// Sign texture
-Texture signsTexture;
-
 // Game Varibles
 int sizeBoardX = 10;
 int sizeBoardY = 10;
-int windowOffset = 32;
+Vector2i windowOffset;
 
 std::vector<int> boatsQuantity = {4, 3, 2, 1};
 int bombsNumber = 50;
