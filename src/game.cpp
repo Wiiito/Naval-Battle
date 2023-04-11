@@ -1,7 +1,11 @@
+#include <unistd.h>
+
 #include "header.hpp"
 
 void game() {
     Vector2i mousePos;
+    static int bombsLeft = bombsNumber;
+
     while (window.pollEvent(event)) {
         if (event.type == Event::Closed)
             window.close();
@@ -39,20 +43,42 @@ void game() {
     RectangleShape square(rectangleSize);
     square.setFillColor(Color::Black);
 
+    // Evitando problemas e facilitador de vidas
+    bool click = false;
+
     for (int i = 0; i < sizeBoardX; i++) {  // Desenhando quadrados na tela e checando hitbox
         for (int j = 0; j < sizeBoardY; j++) {
             // Desenhando na tela
             square.setPosition(getInitialPos(gameScreenReference).x + 7 * fs + i * (rectangleSize.x + spacing), getInitialPos(gameScreenReference).y + 2 * fs + j * (rectangleSize.y + spacing));
             window.draw(square);
 
-            // Provurando clique
+            // Procurando clique
             if (isClickBetween(mousePos, square)) {
-                Players[0].hit(Vector2i(i, j));
+                Players[!currentPlayer].hit(Vector2i(i, j));
+                click = true;
             }
         }
     }
 
-    Players[0].printBoard();
+    // Desenhando foguetes atingidos na tela
+    Players[!currentPlayer].printBoard();
+
+    // Desenhando o jogador atual na tela
+    window.draw(playerText);
+    Text currentPlayerText = createText("  0" + std::to_string(currentPlayer + 1), getFinalPos(playerText).x, getInitialPos(playerText).y, 4, Color::Black);
+    window.draw(currentPlayerText);
+
+    // Desenhando quantidade de bombas restantes na tela
+    Text bombsLeftText = createText(bombsString + "  " + std::to_string(bombsLeft), getInitialPos(playerText).x, getInitialPos(playerText).y + 6 * fs, 4, Color::Black);
+    window.draw(bombsLeftText);
 
     window.display();
+
+    if (click) {  // Pausando a execução por 2 segundos para a animação e entendimento do player
+        sleep(2);
+        if (currentPlayer) {
+            bombsLeft--;
+        }
+        currentPlayer = !currentPlayer;
+    }
 }

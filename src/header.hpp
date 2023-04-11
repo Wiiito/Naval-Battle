@@ -59,19 +59,15 @@ Text languageText;
 
 // -- Botões --
 // Start
-Texture btnTx;
 Sprite btnSprite;
 
 // Configurações
-Texture settingsTx;
 Sprite settingsSprite;
 
 // Bandeiras Paises
-Texture countryFlagTx;
 Sprite countryFlagSprite;
 
 // Quit
-Texture quitTx;
 Sprite quitSprite;
 
 // ---- Fim Menu ----
@@ -81,7 +77,6 @@ Sprite quitSprite;
 Texture languageCardTx;
 Sprite languageCardSprite;
 
-Texture languageBackButtonTx;
 Sprite languageBackButtonSprite;
 
 // Idioma Text
@@ -125,6 +120,7 @@ Text boardText;
 Text boardWidthText;
 Text boardHeightText;
 Text boatsText;
+Text playerText;
 Text twoBoatsTextTitle;
 Text threeBoatsTextTitle;
 Text fourBoatsTextTitle;
@@ -179,6 +175,7 @@ class Player {
 };
 
 std::vector<Player> Players;
+int currentPlayer = 0;
 // ---- End game Objects
 
 // ---- Game render screen ----

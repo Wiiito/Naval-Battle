@@ -1,5 +1,5 @@
 <gameTexts>
-    <lastLang>English</lastLang>
+    <lastLang>Portugues</lastLang>
     <coders>ELLIS, ERICK E FLAVIO</coders>
     <languages>
         <English id="0">
@@ -13,6 +13,7 @@
             <width>Width</width>
             <height>Height</height>
             <boats>Boats</boats>
+            <player>Player</player>
         </English>
         <Portugues id="1">
             <acronym>pt</acronym>
@@ -25,6 +26,7 @@
             <width>Largura</width>
             <height>Altura</height>
             <boats>Barcos</boats>
+            <player>Jogador</player>
         </Portugues>
         <Espanol id="2">
             <acronym>es</acronym>
@@ -37,6 +39,7 @@
             <width>Larguta</width>
             <height>Altura</height>
             <boats>Barcos</boats>
+            <player>Jugador</player>
         </Espanol>
         <Italiano id="3">
             <acronym>it</acronym>
@@ -49,6 +52,7 @@
             <width>Larghezza</width>
             <height>Altezza</height>
             <boats>Barche</boats>
+            <player>Giocatore</player>
         </Italiano>
         <Deutsch id="4">
             <acronym>de</acronym>
@@ -61,6 +65,7 @@
             <width>Breite</width>
             <height>Hohe</height>
             <boats>Boote</boats>
+            <player>Spieler</player>
         </Deutsch>
     </languages>
 </gameTexts>

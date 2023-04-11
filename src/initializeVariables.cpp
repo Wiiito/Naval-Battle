@@ -1,8 +1,8 @@
 #include <time.h>
 
-#include "header.hpp"
-
 #include <iostream>
+
+#include "header.hpp"
 
 // Variables that need to be initialized only one time will be here
 
@@ -88,7 +88,6 @@ void initializeVar() {
     gameMultiPlayerSprite.setOrigin(gameMultiPlayerSprite.getLocalBounds().width / 2, gameMultiPlayerSprite.getLocalBounds().height / 2);
     gameMultiPlayerSprite.setPosition(windowWidth * 2 / 3, midWindowHeight);
 
-
     // Game Screen reference
     gameScreenReferenceTexture.loadFromFile("src/assets/gameScreen.png");
     gameScreenReference.setTexture(gameScreenReferenceTexture);
@@ -121,7 +120,7 @@ void updateText() {
     selectedLang->QueryAttribute("id", &id);
     String languageStr = selectedLang->FirstChildElement("language")->GetText();
 
-    std::cout << id << std::endl;
+    // std::cout << id << std::endl;
 
     // ---- End Extracting Info from xml ----
 
@@ -205,6 +204,10 @@ void updateText() {
     threeBoatsTextTitle = createText("3", leftBoarder + 1.5 * fs, topBoarder + 20.5 * fs, 3, Color::Black);
     fourBoatsTextTitle = createText("4", leftBoarder + 1.5 * fs, topBoarder + 23 * fs, 3, Color::Black);
     fiveBoatsTextTitle = createText("5", leftBoarder + 1.5 * fs, topBoarder + 25.5 * fs, 3, Color::Black);
+
+    // Player
+    playerText = createText(selectedLang->FirstChildElement("player")->GetText(), getInitialPos(gameScreenReference).x + 7 * fs + gameScreenReference.getLocalBounds().width * gameScreenReference.getScale().x / 2 - 2 * fs + 2 * fs,
+                            getInitialPos(gameScreenReference).y + 2 * fs, 4, Color::Black);
 
     // ---- Fim Settings Menu ----
 
