@@ -87,15 +87,15 @@
             <name>Francais</name>
             <title>Bataille spatiale</title>
             <language>Langue</language>
-            <settings>Paramètres</settings>
+            <settings>Parametres</settings>
             <bombs>Pompes</bombs>
             <board>Conseil</board>
             <width>Largeur</width>
             <height>Hauteur</height>
             <boats>bateaux</boats>
             <player>Joueur</player>
-            <congratulations>Toutes nos félicitations</congratulations>
-            <won>Tu as gagné</won>
+            <congratulations>Toutes nos felicitations</congratulations>
+            <won>Tu as gagne</won>
             <lose>TU AS PERDU</lose>
         </Francais>
     </languages>

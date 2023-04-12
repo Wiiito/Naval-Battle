@@ -7,7 +7,12 @@ void animate(Vector2i pos) {
 
     float timeElapsed = clock.getElapsedTime().asSeconds();
     RectangleShape lazerBean;
-    lazerBean.setFillColor(Color::Yellow);
+
+    lazerBean.setFillColor(Color(46, 103, 248));
+
+    if (currentPlayer) {
+        lazerBean.setFillColor(Color(235, 33, 46));
+    }
 
     bool firstQuadrant = true;
     bool secondQuadrant = true;
@@ -60,6 +65,16 @@ void animate(Vector2i pos) {
     baixo = beanEnd.x - beanStart.x;
     lado = beanEnd.y - beanStart.y;
     hipotenusa = sqrt(baixo * baixo + lado * lado);
+
+    float angle = (asin(lado / hipotenusa) * 180 / 3.14159265);
+
+    if (beanEnd.x < beanStart.x) {
+        angle = 180 - angle;
+    }
+
+    std::cout << angle << std::endl;
+
+    lazerBean.setRotation(angle);
 
     while (timeElapsed <= 1) {
         lazerBean.setSize(Vector2f(hipotenusa / 3 * sin(timeElapsed * 3.14159265), 0.5 * fs));
