@@ -1,13 +1,11 @@
 #include <SFML/Graphics.hpp>
 
-#include "src/game.cpp"
 #include "src/initializeVariables.cpp"
-#include "src/languageMenu.cpp"
-#include "src/players.cpp"
-#include "src/rockets.cpp"
+#include "src/game.cpp"
 #include "src/bot.cpp"
-#include "src/settings.cpp"
 #include "src/startMenu.cpp"
+#include "src/settings.cpp"
+#include "src/languageMenu.cpp"
 #include "src/winScreen.cpp"
 #include "src/loseScreen.cpp"
 

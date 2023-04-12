@@ -186,7 +186,7 @@ void game() {
 
         Players[!currentPlayer].printBoard();
         window.display();
-        
+
         sleep(1);
         if (currentPlayer) {
             bombsLeft--;
@@ -199,4 +199,5 @@ void game() {
     if (bombsLeft <= 0) {
         controlPanel = 6;
     }
+}
 }

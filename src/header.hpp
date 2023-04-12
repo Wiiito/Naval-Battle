@@ -127,6 +127,11 @@ Text threeBoatsTextTitle;
 Text fourBoatsTextTitle;
 Text fiveBoatsTextTitle;
 
+Sprite gameSinglePlayerSprite;
+Sprite gameMultiPlayerSprite;
+Sprite endScreenBackButton;
+Sprite endScreenPlayAgain;
+
 // Game Varibles
 int sizeBoardX = 10;
 int sizeBoardY = 10;
@@ -201,17 +206,18 @@ bool restart = true;
 Texture gameBackgroundTx;
 Sprite gameBackgroundSprite;
 
-Sprite gameSinglePlayerSprite;
-Sprite gameMultiPlayerSprite;
+Texture gamePlayersTx;
+// ---- End game Objects
 
-// ---- Tela final ----
+// ---- End screen ----
 Text congratulationsText;
 std::string wonString;
-Sprite endScreenBackButton;
-Sprite endScreenPlayAgain;
 
 // ---- Mensagem perdeu ----
 Text loseText;
 
 #include "lib/positions.cpp"
 #include "lib/text.cpp"
+
+#include "players.cpp"
+#include "rockets.cpp"
