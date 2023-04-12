@@ -95,6 +95,20 @@ void initializeVar() {
     gameScreenReference.setOrigin(gameScreenReference.getLocalBounds().width / 2, gameScreenReference.getLocalBounds().height / 2);
     gameScreenReference.setPosition(midWindowWidth, midWindowHeight);
 
+    // Win screen back button
+    endScreenBackButton.setTexture(texture);
+    endScreenBackButton.setTextureRect(IntRect(10 * textureOffset, 0, 2 * textureOffset, 2 * textureOffset));
+    endScreenBackButton.setScale((float)windowWidth * 1.6 / 1920, (float)windowHeight * 1.6 / 1080);
+    endScreenBackButton.setOrigin(endScreenBackButton.getLocalBounds().width / 2, endScreenBackButton.getLocalBounds().height / 2);
+    endScreenBackButton.setPosition(midWindowWidth + 10 * fs, midWindowHeight + midWindowHeight * 1.3 / 5);
+
+    // Win play again button
+    endScreenPlayAgain.setTexture(texture);
+    endScreenPlayAgain.setTextureRect(IntRect(8 * textureOffset, 0, 2 * textureOffset, 2 * textureOffset));
+    endScreenPlayAgain.setScale((float)windowWidth * 1.6 / 1920, (float)windowHeight * 1.6 / 1080);
+    endScreenPlayAgain.setOrigin(endScreenPlayAgain.getLocalBounds().width / 2, endScreenPlayAgain.getLocalBounds().height / 2);
+    endScreenPlayAgain.setPosition(midWindowWidth - 10 * fs, midWindowHeight + midWindowHeight * 1.3 / 5);
+
     updateText();  // First generation of the text
 }
 
@@ -210,6 +224,14 @@ void updateText() {
                             getInitialPos(gameScreenReference).y + 2 * fs, 4, Color::Black);
 
     // ---- Fim Settings Menu ----
+
+    // ---- Congratulations Start ----
+
+    congratulationsText = createText(selectedLang->FirstChildElement("congratulations")->GetText(), midWindowWidth,
+                                     getInitialPos(gameScreenReference).y + 5 * fs, 8, Color::Black, "Blanka", "middle");
+    wonString = selectedLang->FirstChildElement("won")->GetText();
+
+    // ---- Congratulations End ----
 
     int control = 0;  // Todas as linguas
     while (pLanguage) {

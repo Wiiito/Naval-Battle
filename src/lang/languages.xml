@@ -14,6 +14,8 @@
             <height>Height</height>
             <boats>Boats</boats>
             <player>Player</player>
+            <congratulations>CONGRATULATIONS</congratulations>
+            <won>you won</won>
         </English>
         <Portugues id="1">
             <acronym>pt</acronym>
@@ -27,6 +29,8 @@
             <height>Altura</height>
             <boats>Barcos</boats>
             <player>Jogador</player>
+            <congratulations>PARABENS</congratulations>
+            <won>voce ganhou</won>
         </Portugues>
         <Espanol id="2">
             <acronym>es</acronym>
@@ -40,6 +44,8 @@
             <height>Altura</height>
             <boats>Barcos</boats>
             <player>Jugador</player>
+            <congratulations>FELICIDADES</congratulations>
+            <won>ganaste</won>
         </Espanol>
         <Italiano id="3">
             <acronym>it</acronym>
@@ -53,6 +59,8 @@
             <height>Altezza</height>
             <boats>Barche</boats>
             <player>Giocatore</player>
+            <congratulations>CONGRATULAZIONI</congratulations>
+            <won>hai vinto</won>
         </Italiano>
         <Deutsch id="4">
             <acronym>de</acronym>
@@ -66,6 +74,8 @@
             <height>Hohe</height>
             <boats>Boote</boats>
             <player>Spieler</player>
+            <congratulations>GLUCKWUNSCH</congratulations>
+            <won>du hast gewonnen</won>
         </Deutsch>
     </languages>
 </gameTexts>

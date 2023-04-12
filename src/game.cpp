@@ -5,6 +5,10 @@
 void game() {
     Vector2i mousePos;
     static int bombsLeft = bombsNumber;
+    if (restart) {
+        bombsLeft = bombsNumber;
+        restart = false;
+    }
 
     while (window.pollEvent(event)) {
         if (event.type == Event::Closed)
@@ -54,7 +58,25 @@ void game() {
 
             // Procurando clique
             if (isClickBetween(mousePos, square)) {
-                Players[!currentPlayer].hit(Vector2i(i, j));
+                // Handle click result
+                switch (Players[!currentPlayer].hit(Vector2i(i, j))) {
+                    case 1:
+                        // Acertou mas não destruiu
+                        break;
+                    case 2:
+                        // Destruiu
+                        break;
+
+                    case 3:
+                        // Ganhou
+                        controlPanel = 5;
+
+                        break;
+
+                    default:
+                        break;
+                }
+
                 click = true;
             }
         }
@@ -75,7 +97,7 @@ void game() {
     window.display();
 
     if (click) {  // Pausando a execução por 2 segundos para a animação e entendimento do player
-        sleep(2);
+        sleep(1);
         if (currentPlayer) {
             bombsLeft--;
         }

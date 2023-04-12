@@ -156,6 +156,7 @@ class Rocket {
 
    public:
     Rocket(int type, int orient, Vector2i startPos);
+    bool didDestroy();
     bool hit(Vector2i pos);
     void draw();
     ~Rocket(){};
@@ -170,12 +171,13 @@ class Player {
    public:
     Player(/* args */);
     void printBoard();
-    bool hit(Vector2i pos);
+    int hit(Vector2i pos);
     ~Player();
 };
 
 std::vector<Player> Players;
 int currentPlayer = 0;
+bool restart = true;
 // ---- End game Objects
 
 // ---- Game render screen ----
@@ -185,6 +187,12 @@ Sprite gameBackgroundSprite;
 Texture gamePlayersTx;
 Sprite gameSinglePlayerSprite;
 Sprite gameMultiPlayerSprite;
+
+// ---- Tela final ----
+Text congratulationsText;
+std::string wonString;
+Sprite endScreenBackButton;
+Sprite endScreenPlayAgain;
 
 #include "lib/positions.cpp"
 #include "lib/text.cpp"

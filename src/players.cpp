@@ -3,8 +3,7 @@
 Player::Player() {
     windowOffset = Vector2i(
         boardSize.x / sizeBoardX,
-        boardSize.y / sizeBoardY
-    );
+        boardSize.y / sizeBoardY);
 
     for (int i = 0; i < sizeBoardX; i++) {
         std::vector<int> vectorX;
@@ -17,14 +16,20 @@ Player::Player() {
     std::vector<int> boats = boatsQuantity;  // Clonando a boatsQuantity pra gerar os barcos
 
     while (!boats.empty()) {  // Usando a matriz pra gerar os barcos
+
+        int lastIndice = boats.size() - 1;  // Pega o ultimo elemento do array do tamanho de barcos
+        // Removendo ultimo elemento se ele chega a zero
+        if (boats[lastIndice] <= 0) {
+            boats.pop_back();
+            boats.shrink_to_fit();
+            continue;
+        }
+
         int direction = rand() % 2;
         // Criando localizações a serem utilizadas, devem considerar a direção para a utilização da ultima casa
         int randX, randY;
         randX = rand() % (board.size() - boats.size() + !direction);
         randY = rand() % (board[0].size() - boats.size() + direction);
-
-
-        int lastIndice = boats.size() - 1;  // Pega o ultimo elemento do array do tamanho de barcos
 
         /*
             Sequencia de um codigo genial (direction)
@@ -38,9 +43,12 @@ Player::Player() {
                 break;
             }
         }
+
         if (stop) {  // Deve ficar do lado de fora pois é preciso quebrar o loop de fora
             continue;
         }
+
+        std::cout << randX << " " << randY << std::endl;
 
         // Criando foguete e o agregando ao jogador
         Rocket *generateRocket = new Rocket(boats.size() + 1, direction, Vector2i(randX, randY));
@@ -63,12 +71,7 @@ Player::Player() {
             board[xAxis][yAxis] = 1;                                                              // Casa atual
         }
 
-        // Removendo ultimo elemento se ele chega a zero
         boats[lastIndice]--;
-        if (boats[lastIndice] == 0) {
-            boats.pop_back();
-            boats.shrink_to_fit();
-        }
     }
 
     clearBoard();
@@ -82,14 +85,25 @@ void Player::clearBoard() {  // Limpa o tabuleiro
     }
 }
 
-bool Player::hit(Vector2i pos) {  // Marca uma casa atingida
+int Player::hit(Vector2i pos) {  // Marca uma casa atingida
     for (int i = 0; i < rockets.size(); i++) {
-        if (rockets[i]->hit(pos)) {
+        if (rockets[i]->hit(pos)) {  // Entra se acertar (i é o foguete)
             board[pos.x][pos.y] = 1;
-            return true;
+
+            if (rockets[i]->didDestroy()) {
+                for (int j = 0; j < rockets.size(); j++) {
+                    if (!rockets[j]->didDestroy()) {
+                        return 2;  // Destruiu foguete
+                    }
+                }
+                return 3;  // Usuario ganhou
+            }
+
+            return 1;  // Acertou um foguete
         }
     }
-    return false;
+    // Retorna 0 se não acertar nada
+    return 0;
 }
 
 void Player::printBoard() {

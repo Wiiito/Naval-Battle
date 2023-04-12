@@ -26,9 +26,7 @@ void Rocket::makeRocketBody() {
         rocket[pos].setRotation(-90 * orient);
         rocket[pos].setScale(Vector2f(
             (rocket[pos].getScale().x / textureOffset) * (windowOffset.x - 2) * !orient + (rocket[pos].getScale().y / textureOffset) * (windowOffset.y - 2) * orient,
-            (rocket[pos].getScale().y / textureOffset) * (windowOffset.y - 2) * !orient + (rocket[pos].getScale().x / textureOffset) * (windowOffset.x - 2) * orient
-        ));
-
+            (rocket[pos].getScale().y / textureOffset) * (windowOffset.y - 2) * !orient + (rocket[pos].getScale().x / textureOffset) * (windowOffset.x - 2) * orient));
 
         if (type == 2) {
             spritePosX = textureOffset;
@@ -44,6 +42,15 @@ void Rocket::makeRocketBody() {
             rocket[pos].setTextureRect(sf::IntRect(spritePosX, textureOffset * 1, textureOffset, textureOffset));
         }
     }
+}
+
+bool Rocket::didDestroy() {
+    for (int i = 0; i < hitsTaken.size(); i++) {
+        if (!hitsTaken[i]) {
+            return false;
+        }
+    }
+    return true;
 }
 
 bool Rocket::hit(Vector2i pos) {

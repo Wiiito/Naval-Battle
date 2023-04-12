@@ -7,6 +7,7 @@
 #include "src/rockets.cpp"
 #include "src/settings.cpp"
 #include "src/startMenu.cpp"
+#include "src/winScreen.cpp"
 
 int main() {
     initializeVar();
@@ -32,8 +33,12 @@ int main() {
                 window.close();
                 break;
 
-            default:
+            case 4:
                 menu();
+                break;
+
+            case 5:
+                winScreen();
                 break;
         }
     }
