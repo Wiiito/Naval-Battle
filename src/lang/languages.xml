@@ -1,5 +1,5 @@
 <gameTexts>
-    <lastLang>Portugues</lastLang>
+    <lastLang>Deutsch</lastLang>
     <coders>ELLIS, ERICK E FLAVIO</coders>
     <languages>
         <English id="0">
@@ -80,7 +80,7 @@
             <player>Spieler</player>
             <congratulations>GLUCKWUNSCH</congratulations>
             <won>du hast gewonnen</won>
-            <lose>DU VERLIERST</lose>            
+            <lose>DU VERLIERST</lose>
         </Deutsch>
     </languages>
 </gameTexts>

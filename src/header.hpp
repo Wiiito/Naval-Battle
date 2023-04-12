@@ -132,6 +132,7 @@ int sizeBoardY = 10;
 Vector2i windowOffset;
 
 std::vector<int> boatsQuantity = {4, 3, 2, 1};
+int bombsLeft;
 int bombsNumber = 50;
 
 // Just a reference to draw game objects (will not be draw)
