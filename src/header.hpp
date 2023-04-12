@@ -112,6 +112,7 @@ void updateText();
 // Strings (há textos que serão repeditos no jogo, declarando a string para não ter que extrair do xml 2x)
 std::string settingsString;
 std::string bombsString;
+std::string gameMode;
 
 // Textos a serem desenhados
 Text settingsTitle;
@@ -176,6 +177,21 @@ class Player {
     ~Player();
 };
 
+class Bot{
+    private:
+    Vector2i randPos;
+    bool destroying;
+    Vector2f nextHit;
+    //int difficulty;
+
+    public:
+    Bot();
+    void getRandPos();
+    void hitPos();
+    ~Bot() { };
+};
+Bot bot; 
+
 std::vector<Player> Players;
 int currentPlayer = 0;
 bool restart = true;
@@ -185,7 +201,6 @@ bool restart = true;
 Texture gameBackgroundTx;
 Sprite gameBackgroundSprite;
 
-Texture gamePlayersTx;
 Sprite gameSinglePlayerSprite;
 Sprite gameMultiPlayerSprite;
 

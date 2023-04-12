@@ -74,16 +74,14 @@ void initializeVar() {
     gameBackgroundSprite.setOrigin(gameBackgroundSprite.getLocalBounds().width / 2, gameBackgroundSprite.getLocalBounds().height / 2);
     gameBackgroundSprite.setPosition(midWindowWidth, midWindowHeight);
 
-    gamePlayersTx.loadFromFile("src/assets/players.png");
-
-    gameSinglePlayerSprite.setTexture(gamePlayersTx);
-    gameSinglePlayerSprite.setTextureRect(IntRect(0, 0, 402, 402));
+    gameSinglePlayerSprite.setTexture(texture);
+    gameSinglePlayerSprite.setTextureRect(IntRect(0, 6 * textureOffset, 13 * textureOffset, 13 * textureOffset));
     gameSinglePlayerSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
     gameSinglePlayerSprite.setOrigin(gameSinglePlayerSprite.getLocalBounds().width / 2, gameSinglePlayerSprite.getLocalBounds().height / 2);
     gameSinglePlayerSprite.setPosition(windowWidth * 1 / 3, midWindowHeight);
 
-    gameMultiPlayerSprite.setTexture(gamePlayersTx);
-    gameMultiPlayerSprite.setTextureRect(IntRect(402, 0, 402, 402));
+    gameMultiPlayerSprite.setTexture(texture);
+    gameMultiPlayerSprite.setTextureRect(IntRect(13 * textureOffset, 6 * textureOffset, 13 * textureOffset, 13 * textureOffset));
     gameMultiPlayerSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
     gameMultiPlayerSprite.setOrigin(gameMultiPlayerSprite.getLocalBounds().width / 2, gameMultiPlayerSprite.getLocalBounds().height / 2);
     gameMultiPlayerSprite.setPosition(windowWidth * 2 / 3, midWindowHeight);

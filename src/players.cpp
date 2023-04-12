@@ -48,7 +48,7 @@ Player::Player() {
             continue;
         }
 
-        std::cout << randX << " " << randY << std::endl;
+        //std::cout << randX << " " << randY << std::endl;
 
         // Criando foguete e o agregando ao jogador
         Rocket *generateRocket = new Rocket(boats.size() + 1, direction, Vector2i(randX, randY));
@@ -92,7 +92,7 @@ int Player::hit(Vector2i pos) {  // Marca uma casa atingida
 
             if (rockets[i]->didDestroy()) {
                 for (int j = 0; j < rockets.size(); j++) {
-                    if (!rockets[j]->didDestroy()) {
+                    if (!rockets[j]->didDestroy()) { 
                         return 2;  // Destruiu foguete
                     }
                 }

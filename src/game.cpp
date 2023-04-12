@@ -9,8 +9,7 @@ void game() {
     if (restart) {
         bombsLeft = bombsNumber;
         restart = false;
-    }
-
+    }   
     while (window.pollEvent(event)) {
         if (event.type == Event::Closed)
             window.close();
@@ -33,19 +32,32 @@ void game() {
             Player player1;
             Player player2;
 
+            gameMode = "MP";
+
             Players.push_back(player1);
             Players.push_back(player2);
+        } else if (isClickBetween(mousePos, gameSinglePlayerSprite)){
+            Player player1;
+
+            gameMode = "SP";
+
+            Players.push_back(player1);
         }
 
         window.display();
         return;
     }
+    Vector2f rectangleSize((boardSize.x / sizeBoardX) - 2, (boardSize.y / sizeBoardY) - 2);
 
-    // Calculando o tamanho de cada quadrado
-    int spacing = 2;
-    Vector2f rectangleSize((boardSize.x / sizeBoardX) - spacing, (boardSize.y / sizeBoardY) - spacing);
+    Sprite square;
+    square.setTexture(texture);
+    square.setTextureRect(IntRect(textureOffset, 2 * textureOffset, textureOffset, textureOffset));
+    square.setScale(Vector2f(
+        (square.getScale().x / textureOffset) * (boardSize.x / sizeBoardX - 2),
+        (square.getScale().y / textureOffset) * (boardSize.y / sizeBoardY - 2)
+    ));
+    square.setColor(Color(255, 255, 255, 255));
 
-    RectangleShape square(rectangleSize);
 
     // Evitando problemas e facilitador de vidas
     bool click = false;
@@ -53,23 +65,47 @@ void game() {
     for (int i = 0; i < sizeBoardX; i++) {  // Desenhando quadrados na tela e checando hitbox
         for (int j = 0; j < sizeBoardY; j++) {
             // Desenhando na tela
-            square.setFillColor(Color::Black);
-            if (Players[!currentPlayer].board[i][j]) {
-                square.setFillColor(Color(0, 0, 0, 200));
-                square.setPosition(getInitialPos(gameScreenReference).x + 7 * fs + i * (rectangleSize.x + spacing), getInitialPos(gameScreenReference).y + 2 * fs + j * (rectangleSize.y + spacing));
+            square.setColor(Color(255, 255, 255, 255));
+            if (gameMode == "MP" && Players[!currentPlayer].board[i][j]) {
+                square.setColor(Color(255, 255, 255, 200));
+                square.setPosition(getInitialPos(gameScreenReference).x + 7 * fs + i * (rectangleSize.x + 2), getInitialPos(gameScreenReference).y + 2 * fs + j * (rectangleSize.y + 2));
+                window.draw(square);
+                continue;
+            } else if (gameMode == "SP" && Players[currentPlayer].board[i][j]) {
+                square.setColor(Color(255, 255, 255, 200));
+                square.setPosition(getInitialPos(gameScreenReference).x + 7 * fs + i * (rectangleSize.x + 2), getInitialPos(gameScreenReference).y + 2 * fs + j * (rectangleSize.y + 2));
                 window.draw(square);
                 continue;
             }
 
-            square.setPosition(getInitialPos(gameScreenReference).x + 7 * fs + i * (rectangleSize.x + spacing), getInitialPos(gameScreenReference).y + 2 * fs + j * (rectangleSize.y + spacing));
+            square.setPosition(getInitialPos(gameScreenReference).x + 7 * fs + i * (rectangleSize.x + 2), getInitialPos(gameScreenReference).y + 2 * fs + j * (rectangleSize.y + 2));
             window.draw(square);
 
             // Procurando clique
-            if (isClickBetween(mousePos, square)) {
+            if (isClickBetween(mousePos, square) && gameMode == "MP") {
                 animate(Vector2i(i,j));
-                
                 // Handle click result
                 switch (Players[!currentPlayer].hit(Vector2i(i, j))) {
+                    case 1:
+                        // Acertou mas não destruiu
+                        break;
+                    case 2:
+                        // Destruiu
+                        break;
+
+                    case 3:
+                        // Ganhou
+                        controlPanel = 5;
+
+                        break;
+
+                    default:
+                        break;
+                }
+
+                click = true;
+            } else if (isClickBetween(mousePos, square) && gameMode == "SP"){
+                switch (Players[currentPlayer].hit(Vector2i(i, j))) {
                     case 1:
                         // Acertou mas não destruiu
                         break;
@@ -93,7 +129,17 @@ void game() {
     }
 
     // Desenhando foguetes atingidos na tela
-    Players[!currentPlayer].printBoard();
+    if (gameMode == "MP"){
+        Players[!currentPlayer].printBoard();
+    } else if(gameMode == "SP"){
+        Players[currentPlayer].printBoard();
+    }
+
+    if (gameMode == "MP" && currentPlayer == 0){
+        bot.hitPos();
+        click = true;
+    }
+   
 
     // Desenhando o jogador atual na tela
     window.draw(playerText);
@@ -107,7 +153,7 @@ void game() {
     window.display();
 
     if (click) {  // Pausando a execução por 2 segundos para a animação e entendimento do player
-        window.clear();
+    window.clear();
         window.draw(gameBackgroundSprite);
 
         // Desenhando o jogador atual na tela
@@ -140,11 +186,14 @@ void game() {
 
         Players[!currentPlayer].printBoard();
         window.display();
+        
         sleep(1);
         if (currentPlayer) {
             bombsLeft--;
         }
-        currentPlayer = !currentPlayer;
+        if (gameMode == "MP"){
+            currentPlayer = !currentPlayer;
+        
     }
 
     if (bombsLeft <= 0) {
