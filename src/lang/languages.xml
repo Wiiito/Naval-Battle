@@ -1,5 +1,5 @@
 <gameTexts>
-    <lastLang>Deutsch</lastLang>
+    <lastLang>Portugues</lastLang>
     <coders>ELLIS, ERICK E FLAVIO</coders>
     <languages>
         <English id="0">
@@ -82,5 +82,21 @@
             <won>du hast gewonnen</won>
             <lose>DU VERLIERST</lose>
         </Deutsch>
+        <Francais id="5">
+            <acronym>fr</acronym>
+            <name>Francais</name>
+            <title>Bataille spatiale</title>
+            <language>Langue</language>
+            <settings>Paramètres</settings>
+            <bombs>Pompes</bombs>
+            <board>Conseil</board>
+            <width>Largeur</width>
+            <height>Hauteur</height>
+            <boats>bateaux</boats>
+            <player>Joueur</player>
+            <congratulations>Toutes nos félicitations</congratulations>
+            <won>Tu as gagné</won>
+            <lose>TU AS PERDU</lose>
+        </Francais>
     </languages>
 </gameTexts>

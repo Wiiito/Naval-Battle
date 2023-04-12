@@ -39,16 +39,16 @@ void animate(Vector2i pos) {
     // Setando a casa inicial de acordo com o quadrante
     if (firstQuadrant) {
         beanStart = Vector2i(getInitialPos(gameScreenReference).x + 7 * fs + (rand() % 5 + 5) * orientToY * (boardSize.x / sizeBoardX) + boardSize.x * !orientToY,
-        getInitialPos(gameScreenReference).y + 2 * fs + (rand() % 5) * !orientToY * (boardSize.y / sizeBoardY));
+                             getInitialPos(gameScreenReference).y + 2 * fs + (rand() % 5) * !orientToY * (boardSize.y / sizeBoardY));
     } else if (secondQuadrant) {
         beanStart = Vector2i(getInitialPos(gameScreenReference).x + 7 * fs + (rand() % 5) * orientToY * (boardSize.x / sizeBoardX),
-        getInitialPos(gameScreenReference).y + 2 * fs + (rand() % 5) * !orientToY * (boardSize.y / sizeBoardY));
+                             getInitialPos(gameScreenReference).y + 2 * fs + (rand() % 5) * !orientToY * (boardSize.y / sizeBoardY));
     } else if (thirdQuadrant) {
         beanStart = Vector2i(getInitialPos(gameScreenReference).x + 7 * fs + (rand() % 5) * orientToY * (boardSize.x / sizeBoardX),
-        getInitialPos(gameScreenReference).y + 2 * fs + (rand() % 5 + 5) * !orientToY * (boardSize.y / sizeBoardY) + boardSize.y * orientToY);
+                             getInitialPos(gameScreenReference).y + 2 * fs + (rand() % 5 + 5) * !orientToY * (boardSize.y / sizeBoardY) + boardSize.y * orientToY);
     } else if (fourthQuadrant) {
         beanStart = Vector2i(getInitialPos(gameScreenReference).x + 7 * fs + (rand() % 5 + 5) * orientToY * (boardSize.x / sizeBoardX) + boardSize.x * !orientToY,
-        getInitialPos(gameScreenReference).y + 2 * fs + (rand() % 5 + 5) * !orientToY * (boardSize.y / sizeBoardY) + boardSize.y * orientToY);
+                             getInitialPos(gameScreenReference).y + 2 * fs + (rand() % 5 + 5) * !orientToY * (boardSize.y / sizeBoardY) + boardSize.y * orientToY);
     }
 
     // Calculando o fim do bean
@@ -82,12 +82,18 @@ void animate(Vector2i pos) {
         int spacing = 2;
         Vector2f rectangleSize((boardSize.x / sizeBoardX) - spacing, (boardSize.y / sizeBoardY) - spacing);
 
-        RectangleShape square(rectangleSize);
+        Sprite square;
+        square.setTexture(texture);
+        square.setTextureRect(IntRect(textureOffset, 2 * textureOffset, textureOffset, textureOffset));
+        square.setScale(Vector2f(
+            (square.getScale().x / textureOffset) * (boardSize.x / sizeBoardX - 2),
+            (square.getScale().y / textureOffset) * (boardSize.y / sizeBoardY - 2)));
+
         for (int i = 0; i < sizeBoardX; i++) {
             for (int j = 0; j < sizeBoardY; j++) {
-                square.setFillColor(Color::Black);
+                square.setColor(Color(255, 255, 255, 255));
                 if (Players[!currentPlayer].board[i][j]) {
-                    square.setFillColor(Color(0, 0, 0, 200));
+                    square.setColor(Color(255, 255, 255, 200));
                     square.setPosition(getInitialPos(gameScreenReference).x + 7 * fs + i * (rectangleSize.x + spacing), getInitialPos(gameScreenReference).y + 2 * fs + j * (rectangleSize.y + spacing));
                     window.draw(square);
                     continue;
@@ -100,7 +106,7 @@ void animate(Vector2i pos) {
         Players[!currentPlayer].printBoard();
 
         window.draw(lazerBean);
-        
+
         timeElapsed = clock.getElapsedTime().asSeconds();
         window.display();
     }
