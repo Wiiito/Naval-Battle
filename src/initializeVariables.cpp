@@ -233,6 +233,13 @@ void updateText() {
 
     // ---- Congratulations End ----
 
+    // ---- Lose message Start ----
+
+    loseText = createText(selectedLang->FirstChildElement("lose")->GetText(), midWindowWidth,
+                          getInitialPos(gameScreenReference).y + 5 * fs, 8, Color::Black, "Blanka", "middle");
+
+    // ---- Lose message End ----
+
     int control = 0;  // Todas as linguas
     while (pLanguage) {
         // Colocando retangulos das linguagens a serem desenhadas dentro de um vector

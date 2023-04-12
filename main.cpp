@@ -8,6 +8,7 @@
 #include "src/settings.cpp"
 #include "src/startMenu.cpp"
 #include "src/winScreen.cpp"
+#include "src/loseScreen.cpp"
 
 int main() {
     initializeVar();
@@ -39,6 +40,10 @@ int main() {
 
             case 5:
                 winScreen();
+                break;
+
+            case 6:
+                loseScreen();
                 break;
         }
     }

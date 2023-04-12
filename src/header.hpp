@@ -194,5 +194,8 @@ std::string wonString;
 Sprite endScreenBackButton;
 Sprite endScreenPlayAgain;
 
+// ---- Mensagem perdeu ----
+Text loseText;
+
 #include "lib/positions.cpp"
 #include "lib/text.cpp"

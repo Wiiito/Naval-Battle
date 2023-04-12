@@ -55,6 +55,9 @@ void game() {
             square.setFillColor(Color::Black);
             if (Players[!currentPlayer].board[i][j]) {
                 square.setFillColor(Color(0, 0, 0, 200));
+                square.setPosition(getInitialPos(gameScreenReference).x + 7 * fs + i * (rectangleSize.x + spacing), getInitialPos(gameScreenReference).y + 2 * fs + j * (rectangleSize.y + spacing));
+                window.draw(square);
+                continue;
             }
 
             square.setPosition(getInitialPos(gameScreenReference).x + 7 * fs + i * (rectangleSize.x + spacing), getInitialPos(gameScreenReference).y + 2 * fs + j * (rectangleSize.y + spacing));
@@ -107,4 +110,8 @@ void game() {
         }
         currentPlayer = !currentPlayer;
     }
+    if (bombsLeft <= 0) {
+        controlPanel = 6;
+    }
+    
 }

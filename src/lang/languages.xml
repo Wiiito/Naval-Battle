@@ -16,6 +16,7 @@
             <player>Player</player>
             <congratulations>CONGRATULATIONS</congratulations>
             <won>you won</won>
+            <lose>YOU LOSE</lose>
         </English>
         <Portugues id="1">
             <acronym>pt</acronym>
@@ -31,6 +32,7 @@
             <player>Jogador</player>
             <congratulations>PARABENS</congratulations>
             <won>voce ganhou</won>
+            <lose>PERDERAM</lose>
         </Portugues>
         <Espanol id="2">
             <acronym>es</acronym>
@@ -46,6 +48,7 @@
             <player>Jugador</player>
             <congratulations>FELICIDADES</congratulations>
             <won>ganaste</won>
+            <lose>TU PIERDES</lose>
         </Espanol>
         <Italiano id="3">
             <acronym>it</acronym>
@@ -61,6 +64,7 @@
             <player>Giocatore</player>
             <congratulations>CONGRATULAZIONI</congratulations>
             <won>hai vinto</won>
+            <lose>HAI PERSO</lose>
         </Italiano>
         <Deutsch id="4">
             <acronym>de</acronym>
@@ -76,6 +80,7 @@
             <player>Spieler</player>
             <congratulations>GLUCKWUNSCH</congratulations>
             <won>du hast gewonnen</won>
+            <lose>DU VERLIERST</lose>            
         </Deutsch>
     </languages>
 </gameTexts>
