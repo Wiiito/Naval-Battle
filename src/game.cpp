@@ -45,7 +45,6 @@ void game() {
     Vector2f rectangleSize((boardSize.x / sizeBoardX) - spacing, (boardSize.y / sizeBoardY) - spacing);
 
     RectangleShape square(rectangleSize);
-    square.setFillColor(Color::Black);
 
     // Evitando problemas e facilitador de vidas
     bool click = false;
@@ -53,6 +52,11 @@ void game() {
     for (int i = 0; i < sizeBoardX; i++) {  // Desenhando quadrados na tela e checando hitbox
         for (int j = 0; j < sizeBoardY; j++) {
             // Desenhando na tela
+            square.setFillColor(Color::Black);
+            if (Players[!currentPlayer].board[i][j]) {
+                square.setFillColor(Color(0, 0, 0, 200));
+            }
+
             square.setPosition(getInitialPos(gameScreenReference).x + 7 * fs + i * (rectangleSize.x + spacing), getInitialPos(gameScreenReference).y + 2 * fs + j * (rectangleSize.y + spacing));
             window.draw(square);
 

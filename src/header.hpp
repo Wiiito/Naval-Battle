@@ -164,12 +164,12 @@ class Rocket {
 
 class Player {
    private:
-    std::vector<std::vector<int>> board;
     std::vector<Rocket *> rockets;
     void clearBoard();
 
    public:
     Player(/* args */);
+    std::vector<std::vector<int>> board;
     void printBoard();
     int hit(Vector2i pos);
     ~Player();

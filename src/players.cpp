@@ -86,9 +86,9 @@ void Player::clearBoard() {  // Limpa o tabuleiro
 }
 
 int Player::hit(Vector2i pos) {  // Marca uma casa atingida
+    board[pos.x][pos.y] = 1;
     for (int i = 0; i < rockets.size(); i++) {
         if (rockets[i]->hit(pos)) {  // Entra se acertar (i é o foguete)
-            board[pos.x][pos.y] = 1;
 
             if (rockets[i]->didDestroy()) {
                 for (int j = 0; j < rockets.size(); j++) {
