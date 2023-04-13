@@ -10,11 +10,22 @@ void game() {
         bombsLeft = bombsNumber;
         restart = false;
     }
+
+    bool escPressed;
     while (window.pollEvent(event)) {
         if (event.type == Event::Closed)
             window.close();
         if (Mouse::isButtonPressed(Mouse::Left))
             mousePos = Mouse::getPosition(window);
+        if (Keyboard::isKeyPressed(Keyboard::Escape))
+            escPressed = true;
+    }
+
+    if (escPressed) {
+        Players.clear();
+        Players.shrink_to_fit();
+        restart = true;
+        controlPanel = 4;
     }
 
     window.clear();

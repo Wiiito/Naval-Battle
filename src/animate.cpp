@@ -44,17 +44,17 @@ void animate(Vector2i pos) {
 
     // Setando a casa inicial de acordo com o quadrante
     if (firstQuadrant) {
-        beanStart = Vector2i(getInitialPos(gameScreenReference).x + 7 * fs + (rand() % 5 + 5) * orientToY * (boardSize.x / sizeBoardX) + boardSize.x * !orientToY,
-                             getInitialPos(gameScreenReference).y + 2 * fs + (rand() % 5) * !orientToY * (boardSize.y / sizeBoardY));
+        beanStart = Vector2i(getInitialPos(gameScreenReference).x + 7 * fs + (rand() % sizeBoardX / 2 + sizeBoardX / 2) * orientToY * (boardSize.x / sizeBoardX) + boardSize.x * !orientToY,
+                             getInitialPos(gameScreenReference).y + 2 * fs + (rand() % sizeBoardY / 2) * !orientToY * (boardSize.y / sizeBoardY));
     } else if (secondQuadrant) {
-        beanStart = Vector2i(getInitialPos(gameScreenReference).x + 7 * fs + (rand() % 5) * orientToY * (boardSize.x / sizeBoardX),
-                             getInitialPos(gameScreenReference).y + 2 * fs + (rand() % 5) * !orientToY * (boardSize.y / sizeBoardY));
+        beanStart = Vector2i(getInitialPos(gameScreenReference).x + 7 * fs + (rand() % sizeBoardX / 2) * orientToY * (boardSize.x / sizeBoardX),
+                             getInitialPos(gameScreenReference).y + 2 * fs + (rand() % sizeBoardY / 2) * !orientToY * (boardSize.y / sizeBoardY));
     } else if (thirdQuadrant) {
-        beanStart = Vector2i(getInitialPos(gameScreenReference).x + 7 * fs + (rand() % 5) * orientToY * (boardSize.x / sizeBoardX),
-                             getInitialPos(gameScreenReference).y + 2 * fs + (rand() % 5 + 5) * !orientToY * (boardSize.y / sizeBoardY) + boardSize.y * orientToY);
+        beanStart = Vector2i(getInitialPos(gameScreenReference).x + 7 * fs + (rand() % sizeBoardX / 2) * orientToY * (boardSize.x / sizeBoardX),
+                             getInitialPos(gameScreenReference).y + 2 * fs + (rand() % sizeBoardY / 2 + sizeBoardY / 2) * !orientToY * (boardSize.y / sizeBoardY) + boardSize.y * orientToY);
     } else if (fourthQuadrant) {
-        beanStart = Vector2i(getInitialPos(gameScreenReference).x + 7 * fs + (rand() % 5 + 5) * orientToY * (boardSize.x / sizeBoardX) + boardSize.x * !orientToY,
-                             getInitialPos(gameScreenReference).y + 2 * fs + (rand() % 5 + 5) * !orientToY * (boardSize.y / sizeBoardY) + boardSize.y * orientToY);
+        beanStart = Vector2i(getInitialPos(gameScreenReference).x + 7 * fs + (rand() % sizeBoardX / 2 + sizeBoardX / 2) * orientToY * (boardSize.x / sizeBoardX) + boardSize.x * !orientToY,
+                             getInitialPos(gameScreenReference).y + 2 * fs + (rand() % sizeBoardY / 2 + sizeBoardY / 2) * !orientToY * (boardSize.y / sizeBoardY) + boardSize.y * orientToY);
     }
 
     // Calculando o fim do bean
