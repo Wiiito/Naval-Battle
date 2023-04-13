@@ -140,11 +140,6 @@ void game() {
         Players[currentPlayer].printBoard();
     }
 
-    if (gameMode == "MP" && currentPlayer == 0) {
-        bot.hitPos();
-        click = true;
-    }
-
     // Desenhando o jogador atual na tela
     window.draw(playerText);
     Text currentPlayerText = createText("  0" + std::to_string(currentPlayer + 1), getFinalPos(playerText).x, getInitialPos(playerText).y, 4, Color::Black);
@@ -183,7 +178,7 @@ void game() {
         for (int i = 0; i < sizeBoardX; i++) {
             for (int j = 0; j < sizeBoardY; j++) {
                 square.setColor(Color(255, 255, 255, 255));
-                if (Players[!currentPlayer].board[i][j]) {
+                if (Players[!currentPlayer * (Players.size() - 1)].board[i][j]) {
                     square.setColor(Color(255, 255, 255, 200));
                     square.setPosition(getInitialPos(gameScreenReference).x + 7 * fs + i * (rectangleSize.x + spacing), getInitialPos(gameScreenReference).y + 2 * fs + j * (rectangleSize.y + spacing));
                     window.draw(square);
@@ -194,11 +189,11 @@ void game() {
             }
         }
 
-        Players[!currentPlayer].printBoard();
+        Players[!currentPlayer * (Players.size() - 1)].printBoard();
         window.display();
 
         sleep(1);
-        if (currentPlayer) {
+        if (currentPlayer || gameMode == "SP") {
             bombsLeft--;
         }
         if (gameMode == "MP") {

@@ -106,7 +106,7 @@ void animate(Vector2i pos) {
         for (int i = 0; i < sizeBoardX; i++) {
             for (int j = 0; j < sizeBoardY; j++) {
                 square.setColor(Color(255, 255, 255, 255));
-                if (Players[!currentPlayer].board[i][j]) {
+                if (Players[!currentPlayer * (Players.size() - 1)].board[i][j]) {
                     square.setColor(Color(255, 255, 255, 200));
                     square.setPosition(getInitialPos(gameScreenReference).x + 7 * fs + i * (rectangleSize.x + spacing), getInitialPos(gameScreenReference).y + 2 * fs + j * (rectangleSize.y + spacing));
                     window.draw(square);
@@ -117,7 +117,7 @@ void animate(Vector2i pos) {
             }
         }
 
-        Players[!currentPlayer].printBoard();
+        Players[!currentPlayer * (Players.size() - 1)].printBoard();
 
         window.draw(lazerBean);
 

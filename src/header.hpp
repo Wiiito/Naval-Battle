@@ -183,21 +183,6 @@ class Player {
     ~Player();
 };
 
-class Bot {
-   private:
-    Vector2i randPos;
-    bool destroying;
-    Vector2f nextHit;
-    // int difficulty;
-
-   public:
-    Bot();
-    void getRandPos();
-    void hitPos();
-    ~Bot(){};
-};
-Bot bot;
-
 std::vector<Player> Players;
 int currentPlayer = 0;
 bool restart = true;

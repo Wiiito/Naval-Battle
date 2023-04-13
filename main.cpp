@@ -1,13 +1,12 @@
 #include <SFML/Graphics.hpp>
 
-#include "src/initializeVariables.cpp"
 #include "src/game.cpp"
-#include "src/bot.cpp"
-#include "src/startMenu.cpp"
-#include "src/settings.cpp"
+#include "src/initializeVariables.cpp"
 #include "src/languageMenu.cpp"
-#include "src/winScreen.cpp"
 #include "src/loseScreen.cpp"
+#include "src/settings.cpp"
+#include "src/startMenu.cpp"
+#include "src/winScreen.cpp"
 
 int main() {
     initializeVar();
