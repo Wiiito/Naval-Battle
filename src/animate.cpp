@@ -3,6 +3,7 @@
 #include "header.hpp"
 
 void animate(Vector2i pos) {
+    shootSound.play();
     Clock clock;
 
     float timeElapsed = clock.getElapsedTime().asSeconds();
@@ -72,12 +73,10 @@ void animate(Vector2i pos) {
         angle = 180 - angle;
     }
 
-    std::cout << angle << std::endl;
-
     lazerBean.setRotation(angle);
 
     while (timeElapsed <= 1) {
-        lazerBean.setSize(Vector2f(hipotenusa / 3 * sin(timeElapsed * 3.14159265), 0.5 * fs));
+        lazerBean.setSize(Vector2f(hipotenusa / 3 * sin(timeElapsed * 3.14159265), 0.25 * fs));
         lazerBean.setOrigin(0, lazerBean.getLocalBounds().height / 2);
         lazerBean.setPosition(beanStart.x + baixo * timeElapsed, beanStart.y + lado * timeElapsed);
 

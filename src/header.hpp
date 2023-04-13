@@ -1,5 +1,6 @@
 // Header archive
 #pragma once  // To reduce build times to 1 only
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
@@ -182,20 +183,20 @@ class Player {
     ~Player();
 };
 
-class Bot{
-    private:
+class Bot {
+   private:
     Vector2i randPos;
     bool destroying;
     Vector2f nextHit;
-    //int difficulty;
+    // int difficulty;
 
-    public:
+   public:
     Bot();
     void getRandPos();
     void hitPos();
-    ~Bot() { };
+    ~Bot(){};
 };
-Bot bot; 
+Bot bot;
 
 std::vector<Player> Players;
 int currentPlayer = 0;
@@ -216,8 +217,19 @@ std::string wonString;
 // ---- Mensagem perdeu ----
 Text loseText;
 
+// ---- Sound effects ----
+Music musica;
+
+SoundBuffer shootBuffer;
+Sound shootSound;
+
+SoundBuffer hitBuffer;
+Sound hitSound;
+
+SoundBuffer explodeBuffer;
+Sound explodeSound;
+
 #include "lib/positions.cpp"
 #include "lib/text.cpp"
-
 #include "players.cpp"
 #include "rockets.cpp"

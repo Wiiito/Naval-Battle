@@ -63,6 +63,8 @@ void game() {
         for (int j = 0; j < sizeBoardY; j++) {
             // Desenhando na tela
             square.setColor(Color(255, 255, 255, 255));
+
+            // Se ja tiver sido clicado, muda a cor e continua a desenhar
             if (gameMode == "MP" && Players[!currentPlayer].board[i][j]) {
                 square.setColor(Color(255, 255, 255, 200));
                 square.setPosition(getInitialPos(gameScreenReference).x + 7 * fs + i * (rectangleSize.x + 2), getInitialPos(gameScreenReference).y + 2 * fs + j * (rectangleSize.y + 2));
@@ -85,18 +87,15 @@ void game() {
                 switch (Players[!currentPlayer].hit(Vector2i(i, j))) {
                     case 1:
                         // Acertou mas não destruiu
+                        hitSound.play();
                         break;
                     case 2:
                         // Destruiu
+                        explodeSound.play();
                         break;
-
                     case 3:
                         // Ganhou
                         controlPanel = 5;
-
-                        break;
-
-                    default:
                         break;
                 }
 
@@ -105,19 +104,16 @@ void game() {
                 animate(Vector2i(i, j));
                 switch (Players[currentPlayer].hit(Vector2i(i, j))) {
                     case 1:
+                        hitSound.play();
                         // Acertou mas não destruiu
                         break;
                     case 2:
                         // Destruiu
+                        explodeSound.play();
                         break;
-
                     case 3:
                         // Ganhou
                         controlPanel = 5;
-
-                        break;
-
-                    default:
                         break;
                 }
 

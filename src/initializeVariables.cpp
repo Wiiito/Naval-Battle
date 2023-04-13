@@ -9,6 +9,20 @@
 void initializeVar() {
     srand(time(NULL));  // Randomize rand() value
 
+    musica.openFromFile("src/assets/sounds/Hardmoon_-_Deep_space.ogg");
+    musica.setVolume(65.f);
+    musica.setLoop(true);
+    musica.play();
+
+    shootBuffer.loadFromFile("src/assets/sounds/shoot.ogg");
+    shootSound.setBuffer(shootBuffer);
+
+    hitBuffer.loadFromFile("src/assets/sounds/hitSound.flac");
+    hitSound.setBuffer(hitBuffer);
+
+    explodeBuffer.loadFromFile("src/assets/sounds/explosionSound.flac");
+    explodeSound.setBuffer(explodeBuffer);
+
     // Game texture
     texture.loadFromFile("src/assets/sprites.png");
 
