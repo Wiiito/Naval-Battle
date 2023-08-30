@@ -1,50 +1,51 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
-#include "src/game.cpp"
-#include "src/initializeVariables.cpp"
-#include "src/languageMenu.cpp"
-#include "src/loseScreen.cpp"
-#include "src/settings.cpp"
-#include "src/startMenu.cpp"
-#include "src/winScreen.cpp"
+#include "src/headers/engine.hpp"
+#include "src/containers/menu.hpp"
+
+//#include "src/header.hpp"
+
+/**
+ * Todos os ponteiros para objetos do jogo são chamados aqui pois não podem ser retirados da
+ * memoria. As cenas são configuradas aqui para evitar "param hell", em resumo, pra saber o que é o
+ * que e de onde vem.
+ */
+
+/*class Model {
+public:
+  Model() { };
+  void update(Engine *pEngine) { };
+  void render(sf::RenderWindow * pWindow) { };
+};*/
 
 int main() {
-    initializeVar();
-    window.setKeyRepeatEnabled(false);
-    window.setFramerateLimit(60);
+  std::srand(std::time(nullptr));
 
-    while (window.isOpen()) {
-        // "Loop" do menu
-        switch (controlPanel) {
-            case 0:
-                game();
-                break;
+  // Initial sound configuration
 
-            case 1:
-                settings();
-                break;
+  Engine gameEngine;
 
-            case 2:
-                languagePanel();
-                break;
+  sf::RenderWindow *pWindow = gameEngine.getWindow();
 
-            case 3:
-                window.close();
-                break;
+  // ---- Creating menuScene ----
+  Menu *menu = new Menu;
+  Scene menuScene("menu");
+  menuScene.setInstanceFunction([&menu, pWindow]() -> void {
+    delete (menu);
+    menu = new Menu(pWindow->getSize());
+  });
+  menuScene.add([menu, pWindow, &gameEngine]() -> void {
+    menu->update(&gameEngine);
+    menu->render(pWindow);
+  });
+  gameEngine.pushScene(&menuScene);
 
-            case 4:
-                menu();
-                break;
+  // Set the initial scene
+  gameEngine.setCurrentScene("menu");
 
-            case 5:
-                winScreen();
-                break;
-
-            case 6:
-                loseScreen();
-                break;
-        }
-    }
-
-    return 0;
+  // Runs the game
+  while (gameEngine.getIsWindowOpen()) {
+    gameEngine.updateGame();
+  }
 }
