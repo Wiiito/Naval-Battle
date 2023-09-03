@@ -29,7 +29,7 @@ public:
         this->gameMultiPlayerSprite.setOrigin(this->gameMultiPlayerSprite.getLocalBounds().width / 2, this->gameMultiPlayerSprite.getLocalBounds().height / 2);
         this->gameMultiPlayerSprite.setPosition(this->windowWidth * 2 / 3, this->windowHeight / 2);
 
-        // ---- Game render ----
+        // ---- Game background ----
         gameBackgroundTx.loadFromFile("src/assets/gameBackground.png");
         gameBackgroundSprite.setTexture(gameBackgroundTx);
         gameBackgroundSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
@@ -55,11 +55,17 @@ public:
 
         if (isClickBetween(mousePos, this->gameSinglePlayerSprite))
         {
+            // Só fazendo a varivel pGameMode receber o valor estava dando erro \_(º-º)_/
             pGameMode->replace(0, 0, "S");
+            pGameMode->erase(pGameMode->begin() + 1);
 
-            pEngine->setCurrentScene("menu");
+            pEngine->setCurrentScene("game");
+        } else if (isClickBetween(mousePos, this->gameMultiPlayerSprite))
+        {
+            pGameMode->replace(0, 0, "M");
+            pGameMode->erase(pGameMode->begin() + 1);
+            pEngine->setCurrentScene("game");
         }
-        cout << "Dentro: " << *pGameMode << endl;
     };
 
     void render(RenderWindow *pWindow)

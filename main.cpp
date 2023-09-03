@@ -54,21 +54,19 @@ int main()
   chooseMScene.add([chooseM, pWindow, &gameEngine, gameMode]() -> void
                    {
     chooseM->update(&gameEngine, gameMode);
-    cout << "Fora: " << *gameMode << endl;
     chooseM->render(pWindow); });
   gameEngine.pushScene(&chooseMScene);
-
 
   // ---- Creating gameScene ----
   Game *game = new Game;
   Scene gameScene("game");
-  gameScene.setInstanceFunction([&game, pWindow]() -> void
+  gameScene.setInstanceFunction([&game, pWindow, gameMode]() -> void
                                 {
     delete (game);
-    game = new Game(pWindow->getSize()); });
-  gameScene.add([game, pWindow, &gameEngine, gameMode]() -> void
+    game = new Game(pWindow->getSize(), *gameMode); });
+  gameScene.add([game, pWindow, &gameEngine]() -> void
                 {
-    game->update(&gameEngine, gameMode);
+    game->update(&gameEngine);
     game->render(pWindow); });
   gameEngine.pushScene(&gameScene);
 

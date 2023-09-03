@@ -42,7 +42,7 @@ void Engine::initWindow() {
  */
 void Engine::poolEvents() {
   while (this->pWindow->pollEvent(this->event)) {
-    if (this->event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+    if (this->event.type == sf::Event::Closed) {
       this->pWindow->close();
     }
   }

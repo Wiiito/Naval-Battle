@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "../headers/engine.hpp"
+#include "../headers/players.hpp"
 #include "../lang/tinyxml2.h"
 
 using namespace sf;
@@ -61,6 +62,8 @@ protected:
 
     Text codersText;
     Text codersTextShadow;
+
+    Text playerText;
 
     vector<RectangleShape *> languageBackgrounds;
     vector<Text *> languagesNames;
@@ -209,8 +212,13 @@ protected:
         Text fiveBoatsTextTitle = createText("5", leftBoarder + 1.5 * fs, topBoarder + 25.5 * fs, 3, Color::Black);
 
         // Player
-        Text playerText = createText(selectedLang->FirstChildElement("player")->GetText(), this->gameScreenReference.getGlobalBounds().left + 7 * fs + this->gameScreenReference.getLocalBounds().width * this->gameScreenReference.getScale().x / 2 - 2 * fs + 2 * fs,
-                                     this->gameScreenReference.getGlobalBounds().top + 2 * fs, 4, Color::Black);
+        playerText = createText(
+            selectedLang->FirstChildElement("player")->GetText(),
+            gameScreenReference.getGlobalBounds().left + gameScreenReference.getLocalBounds().width * gameScreenReference.getScale().x / 2 - 2 * fs + 2 * fs,
+            gameScreenReference.getGlobalBounds().top + 2 * fs,
+            4,
+            Color::Black
+        );
 
         // ---- Fim Settings Menu ----
 
