@@ -3,7 +3,9 @@
 using namespace sf;
 using namespace std;
 
-Player::Player(Vector2i boardSizePx, Vector2i squaresCount, Texture *texture, int textureOffset, Sprite *gameScreenReference, int fs) {
+Player::Player(vector<int> boatsQuantity, Vector2i boardSizePx, Vector2i squaresCount, Texture *texture, int textureOffset, Sprite *gameScreenReference, int fs) {
+    this->boatsQuantity = boatsQuantity;
+    
     boardOffset = Vector2i(
         boardSizePx.x / squaresCount.x,
         boardSizePx.y / squaresCount.y);

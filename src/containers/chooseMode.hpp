@@ -3,76 +3,39 @@
 
 class chooseMode : public SceneTemp
 {
+private:
+    bool escPressed = false;
+
 public:
     chooseMode(){/*pass*/};
-    chooseMode(Vector2u windowSize)
+
+    void update(Engine *pEngine)
     {
-        // Window variables
-        this->windowWidth = windowSize.x;
-        this->windowHeight = windowSize.y;
-
-        // Creating a scale to font size (16px - 1080p)
-        fs = (int)(windowHeight / 67.5);
-
-        // Game Main Texture
-        this->mainTexture.loadFromFile("src/assets/sprites.png");
-
-        this->gameSinglePlayerSprite.setTexture(this->mainTexture);
-        this->gameSinglePlayerSprite.setTextureRect(IntRect(0, 6 * textureOffset, 13 * textureOffset, 13 * textureOffset));
-        this->gameSinglePlayerSprite.setScale((float)this->windowWidth / 1920, (float)windowHeight / 1080);
-        this->gameSinglePlayerSprite.setOrigin(this->gameSinglePlayerSprite.getLocalBounds().width / 2, this->gameSinglePlayerSprite.getLocalBounds().height / 2);
-        this->gameSinglePlayerSprite.setPosition(this->windowWidth * 1 / 3, this->windowHeight / 2);
-
-        this->gameMultiPlayerSprite.setTexture(this->mainTexture);
-        this->gameMultiPlayerSprite.setTextureRect(IntRect(13 * textureOffset, 6 * textureOffset, 13 * textureOffset, 13 * textureOffset));
-        this->gameMultiPlayerSprite.setScale((float)this->windowWidth / 1920, (float)windowHeight / 1080);
-        this->gameMultiPlayerSprite.setOrigin(this->gameMultiPlayerSprite.getLocalBounds().width / 2, this->gameMultiPlayerSprite.getLocalBounds().height / 2);
-        this->gameMultiPlayerSprite.setPosition(this->windowWidth * 2 / 3, this->windowHeight / 2);
-
-        // ---- Game background ----
-        gameBackgroundTx.loadFromFile("src/assets/gameBackground.png");
-        gameBackgroundSprite.setTexture(gameBackgroundTx);
-        gameBackgroundSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
-        gameBackgroundSprite.setOrigin(gameBackgroundSprite.getLocalBounds().width / 2, gameBackgroundSprite.getLocalBounds().height / 2);
-        gameBackgroundSprite.setPosition(this->windowWidth / 2, this->windowHeight / 2);
-
-        // Game Screen reference
-        this->gameScreenReferenceTexture.loadFromFile("src/assets/gameScreen.png");
-        this->gameScreenReference.setTexture(this->gameScreenReferenceTexture);
-        this->gameScreenReference.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
-        this->gameScreenReference.setOrigin(this->gameScreenReference.getLocalBounds().width / 2, this->gameScreenReference.getLocalBounds().height / 2);
-        this->gameScreenReference.setPosition(this->windowWidth / 2, this->windowHeight / 2);
-
-        // this->updateText();
-    }
-
-    void update(Engine *pEngine, string *pGameMode)
-    {
+        mousePos = {0, 0};
         if (Mouse::isButtonPressed(Mouse::Left))
-        {
-            this->mousePos = Mouse::getPosition(*pEngine->getWindow());
-        }
+            mousePos = Mouse::getPosition(*pEngine->getWindow());
+        else if (Keyboard::isKeyPressed(Keyboard::Escape))
+            escPressed = true;
 
-        if (isClickBetween(mousePos, this->gameSinglePlayerSprite))
+        if (isClickBetween(mousePos, gameSinglePlayerSprite))
         {
-            // Só fazendo a varivel pGameMode receber o valor estava dando erro \_(º-º)_/
-            pGameMode->replace(0, 0, "S");
-            pGameMode->erase(pGameMode->begin() + 1);
+            gameMode = "SP";
 
             pEngine->setCurrentScene("game");
-        } else if (isClickBetween(mousePos, this->gameMultiPlayerSprite))
+        } else if (isClickBetween(mousePos, gameMultiPlayerSprite))
         {
-            pGameMode->replace(0, 0, "M");
-            pGameMode->erase(pGameMode->begin() + 1);
+            gameMode = "MP";
             pEngine->setCurrentScene("game");
+        } else if (escPressed) {
+            pEngine->setCurrentScene("menu");
         }
     };
 
     void render(RenderWindow *pWindow)
     {
-        pWindow->draw(this->gameScreenReference);
-        pWindow->draw(this->gameBackgroundSprite);
-        pWindow->draw(this->gameSinglePlayerSprite);
-        pWindow->draw(this->gameMultiPlayerSprite);
+        pWindow->draw(gameScreenReference);
+        pWindow->draw(gameBackgroundSprite);
+        pWindow->draw(gameSinglePlayerSprite);
+        pWindow->draw(gameMultiPlayerSprite);
     };
 };

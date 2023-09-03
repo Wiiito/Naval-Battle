@@ -7,7 +7,7 @@ using namespace std;
 class Player {
 private:
     vector<Rocket *> rockets;
-    vector<int> boatsQuantity = {4, 3, 2, 1};
+    vector<int> boatsQuantity;
 
     Vector2i boardSizePx; // Tamanho do tabuleiro em pixels
     Vector2i squaresCount; // Quantidade de casas do tabuleiro no eixo Y
@@ -17,7 +17,7 @@ private:
 
 public:
     Player() {};
-    Player(Vector2i boardSizePx, Vector2i squaresCount, Texture *texture, int textureOffset, Sprite *gameScreenReference, int fs);
+    Player(vector<int> boatsQuantity, Vector2i boardSizePx, Vector2i squaresCount, Texture *texture, int textureOffset, Sprite *gameScreenReference, int fs);
     std::vector<std::vector<int>> board;
     void printBoard(RenderWindow *pWindow);
     int hit(Vector2i pos);

@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <string>
+#include <vector>
 #include "../headers/engine.hpp"
 #include "../headers/players.hpp"
 #include "../lang/tinyxml2.h"
@@ -12,65 +14,117 @@ using namespace std;
 class SceneTemp
 {
 protected:
-    int windowWidth;
-    int windowHeight;
+    static int windowWidth;
+    static int windowHeight;
 
-    Texture mainTexture;
-    int textureOffset = 32;
+    static Texture mainTexture;
+    static int textureOffset;
 
-    Texture menuBgTx;
-    Sprite menuBgSprite;
+    static Texture menuBgTx;
+    static Sprite menuBgSprite;
 
-    Sprite btnSprite;
+    static Sprite btnSprite;
 
-    Sprite settingsSprite;
+    static Sprite settingsSprite;
 
-    Sprite quitSprite;
+    static Sprite quitSprite;
 
-    Texture languageCardTx;
-    Sprite languageCardSprite;
+    static Texture languageCardTx;
+    static Sprite languageCardSprite;
 
-    Texture gameBackgroundTx;
-    Sprite gameBackgroundSprite;
+    static Texture gameBackgroundTx;
+    static Sprite gameBackgroundSprite;
 
-    Texture gameScreenReferenceTexture;
-    Sprite gameScreenReference;
+    static Texture gameScreenReferenceTexture;
+    static Sprite gameScreenReference;
 
-    Sprite gameSinglePlayerSprite;
-    Sprite gameMultiPlayerSprite;
+    static Sprite gameSinglePlayerSprite;
+    static Sprite gameMultiPlayerSprite;
 
-    Vector2i mousePos;
+    static Sprite languageBackButtonSprite;
+
+    static Sprite endScreenBackButton;
+    static Sprite endScreenPlayAgain;
+
+    static Vector2i mousePos;
 
     // Declarando fontes
-    Font fontAnteb;
-    Font fontBlanka;
-    Font fontJedi;
-    Font fontMontserrat;
+    static Font fontAnteb;
+    static Font fontBlanka;
+    static Font fontJedi;
+    static Font fontMontserrat;
 
     // Declarando file para salva-la
-    Text languageText;
-    tinyxml2::XMLElement *pLanguage;
-    string language;
-    string languageToUpper;
+    static tinyxml2::XMLDocument doc;
+    static Text languageText;
+    static tinyxml2::XMLElement *pLanguage;
+    static tinyxml2::XMLElement *pLastLang;
+    static string language;
+    static string languageToUpper;
 
-    Texture flagsTexture;
-    int flagsTextOffset = 64;
-    Sprite countryFlagSprite;
+    static string bombsString;
 
-    Text titleText;
-    Text titleTextShadow;
+    static Texture flagsTexture;
+    static int flagsTextOffset;
+    static Sprite countryFlagSprite;
 
-    Text codersText;
-    Text codersTextShadow;
+    // Sprite e textura para bandeiras
+    static Texture inUseTexture;
+    static Sprite inDrawSprite;
 
-    Text playerText;
+    static Text titleText;
+    static Text titleTextShadow;
+    static Text languageTitleText;
 
-    vector<RectangleShape *> languageBackgrounds;
-    vector<Text *> languagesNames;
+    static Text codersText;
+    static Text codersTextShadow;
+    static Text bombsTextSettings;
+    static Text boardWidthText;
+    static Text boardHeightText;
 
-    int fs;
+    static Text twoBoatsTextTitle;
+    static Text threeBoatsTextTitle;
+    static Text fourBoatsTextTitle;
+    static Text fiveBoatsTextTitle;
+    static Text settingsTitle;
 
-    Text createText(String text, int posX, int posY, int textSize, Color color, String fontAtr = "Anteb", String orientation = "left")
+    static Text playerText;
+    static Text congratulationsText;
+    static string wonString;
+    static string loseString;
+
+    // ---- Sound effects ----
+    static Music musica;
+
+    static SoundBuffer shootBuffer;
+    static Sound shootSound;
+
+    static SoundBuffer hitBuffer;
+    static Sound hitSound;
+
+    static SoundBuffer explodeBuffer;
+    static Sound explodeSound;
+
+    static vector<RectangleShape *> languageBackgrounds;
+    static vector<Text *> languagesNames;
+
+    static int fs;
+    static int currentPlayer;
+
+    // Settings variaables
+    static int bombsNumber;
+    static string gameMode;
+    static Vector2i boardSizePx;
+    static Vector2i squaresCount;
+    static vector<int> boatsQuantity;
+    static Text boardText;
+    static Text boatsText;
+
+    static float leftBoarder;
+    static float topBoarder;
+    static bool win;
+
+    static Text createText(String text, int posX, int posY, int textSize, Color color, String fontAtr = "Anteb", String orientation = "left")
     {
         Text startText;
 
@@ -97,15 +151,14 @@ protected:
         return startText;
     }
 
-    void updateText()
+    static void updateText()
     {
         // ---- Start Extracting Info from xml ----
 
-        tinyxml2::XMLDocument doc;
         doc.LoadFile("src/lang/languages.xml");
 
         tinyxml2::XMLElement *pRootElement = doc.RootElement();
-        tinyxml2::XMLElement *pLastLang = pRootElement->FirstChildElement("lastLang"); // Pegando a ultima lingua utilizada pelo usuario
+        pLastLang = pRootElement->FirstChildElement("lastLang"); // Pegando a ultima lingua utilizada pelo usuario
 
         string codersStr = pRootElement->FirstChildElement("coders")->GetText();
 
@@ -120,8 +173,6 @@ protected:
         int id;
         selectedLang->QueryAttribute("id", &id);
         String languageStr = selectedLang->FirstChildElement("language")->GetText();
-
-        // std::cout << id << std::endl;
 
         // ---- End Extracting Info from xml ----
 
@@ -151,7 +202,7 @@ protected:
         languageText = createText(languageToUpper, windowWidth * 95 / 100, windowHeight * 3 / 100, 2, Color::White, "Montserrat", "Right");
 
         // Language Title Text
-        Text languageTitleText = createText(languageStr, windowWidth / 2, windowWidth / 2 * 23 / 100, 4, Color::Black, "Blanka", "middle");
+        languageTitleText = createText(languageStr, windowWidth / 2, windowWidth / 2 * 23 / 100, 4, Color::Black, "Blanka", "middle");
 
         // ---- End Menu Texts Generation ----
 
@@ -185,55 +236,55 @@ protected:
 
         // ---- Inicio Settings Menu ----
         string settingsString = selectedLang->FirstChildElement("settings")->GetText();
-        string bombsString = selectedLang->FirstChildElement("bombs")->GetText();
+        bombsString = selectedLang->FirstChildElement("bombs")->GetText();
 
-        float leftBoarder = this->languageCardSprite.getGlobalBounds().left + 4 * fs;
-        float topBoarder = windowWidth / 2 * 23 / 100 + 7 * fs;
+        leftBoarder = languageCardSprite.getGlobalBounds().left + 4 * fs;
+        topBoarder = windowWidth / 2 * 23 / 100 + 7 * fs;
 
         // Configurações
-        Text settingsTitle = createText(settingsString, windowWidth / 2 + 2 * fs, windowWidth / 2 * 23 / 100, 4, Color::Black, "Blanka", "middle");
+        settingsTitle = createText(settingsString, windowWidth / 2 + 2 * fs, windowWidth / 2 * 23 / 100, 4, Color::Black, "Blanka", "middle");
         // Bombas
-        Text bombsTextSettings = createText(bombsString, leftBoarder, topBoarder, 3, Color::Black);
+        bombsTextSettings = createText(bombsString, leftBoarder, topBoarder, 3, Color::Black);
 
         // Esclusivos menu configurações
 
         // Tabuleiro
-        Text boardText = createText(selectedLang->FirstChildElement("board")->GetText(), leftBoarder, topBoarder + 5 * fs, 3, Color::Black);
+        boardText = createText(selectedLang->FirstChildElement("board")->GetText(), leftBoarder, topBoarder + 5 * fs, 3, Color::Black);
         // Largura
-        Text boardWidthText = createText(selectedLang->FirstChildElement("width")->GetText(), leftBoarder + fs, topBoarder + 8 * fs, 3, Color::Black);
+        boardWidthText = createText(selectedLang->FirstChildElement("width")->GetText(), leftBoarder + fs, topBoarder + 8 * fs, 3, Color::Black);
         // Altura
-        Text boardHeightText = createText(selectedLang->FirstChildElement("height")->GetText(), leftBoarder + fs, topBoarder + 11 * fs, 3, Color::Black);
+        boardHeightText = createText(selectedLang->FirstChildElement("height")->GetText(), leftBoarder + fs, topBoarder + 11 * fs, 3, Color::Black);
         // Barcos
-        Text boatsText = createText(selectedLang->FirstChildElement("boats")->GetText(), leftBoarder, topBoarder + 15 * fs, 3, Color::Black);
+        boatsText = createText(selectedLang->FirstChildElement("boats")->GetText(), leftBoarder, topBoarder + 15 * fs, 3, Color::Black);
 
-        Text twoBoatsTextTitle = createText("2", leftBoarder + 1.5 * fs, topBoarder + 18 * fs, 3, Color::Black);
-        Text threeBoatsTextTitle = createText("3", leftBoarder + 1.5 * fs, topBoarder + 20.5 * fs, 3, Color::Black);
-        Text fourBoatsTextTitle = createText("4", leftBoarder + 1.5 * fs, topBoarder + 23 * fs, 3, Color::Black);
-        Text fiveBoatsTextTitle = createText("5", leftBoarder + 1.5 * fs, topBoarder + 25.5 * fs, 3, Color::Black);
+        twoBoatsTextTitle = createText("2", leftBoarder + 1.5 * fs, topBoarder + 18 * fs, 3, Color::Black);
+        threeBoatsTextTitle = createText("3", leftBoarder + 1.5 * fs, topBoarder + 20.5 * fs, 3, Color::Black);
+        fourBoatsTextTitle = createText("4", leftBoarder + 1.5 * fs, topBoarder + 23 * fs, 3, Color::Black);
+        fiveBoatsTextTitle = createText("5", leftBoarder + 1.5 * fs, topBoarder + 25.5 * fs, 3, Color::Black);
 
         // Player
-        playerText = createText(
-            selectedLang->FirstChildElement("player")->GetText(),
-            gameScreenReference.getGlobalBounds().left + gameScreenReference.getLocalBounds().width * gameScreenReference.getScale().x / 2 - 2 * fs + 2 * fs,
-            gameScreenReference.getGlobalBounds().top + 2 * fs,
-            4,
-            Color::Black
-        );
+        playerText = createText(selectedLang->FirstChildElement("player")->GetText(),
+                                gameScreenReference.getGlobalBounds().left + 7 * fs + gameScreenReference.getLocalBounds().width * gameScreenReference.getScale().x / 2 - 2 * fs + 2 * fs,
+                                gameScreenReference.getGlobalBounds().top + 2 * fs,
+                                4,
+                                Color::Black);
 
         // ---- Fim Settings Menu ----
 
         // ---- Congratulations Start ----
 
-        Text congratulationsText = createText(selectedLang->FirstChildElement("congratulations")->GetText(), windowWidth / 2,
-                                              this->gameScreenReference.getGlobalBounds().top + 5 * fs, 8, Color::Black, "Blanka", "middle");
-        string wonString = selectedLang->FirstChildElement("won")->GetText();
+        congratulationsText = createText(selectedLang->FirstChildElement("congratulations")->GetText(), windowWidth / 2,
+                                         gameScreenReference.getGlobalBounds().top + 5 * fs, 8, Color::Black, "Blanka", "middle");
+        wonString = selectedLang->FirstChildElement("won")->GetText();
 
         // ---- Congratulations End ----
 
         // ---- Lose message Start ----
 
-        Text loseText = createText(selectedLang->FirstChildElement("lose")->GetText(), windowWidth / 2,
-                                   this->gameScreenReference.getGlobalBounds().top + 5 * fs, 8, Color::Black, "Blanka", "middle");
+        loseString = selectedLang->FirstChildElement("lose")->GetText();
+
+        // Text loseText = createText(selectedLang->FirstChildElement("lose")->GetText(), windowWidth / 2,
+        //                           gameScreenReference.getGlobalBounds().top + 5 * fs, 8, Color::Black, "Blanka", "middle");
 
         // ---- Lose message End ----
 
@@ -242,7 +293,7 @@ protected:
         {
             // Colocando retangulos das linguagens a serem desenhadas dentro de um vector
             RectangleShape *shape = new RectangleShape;
-            shape->setSize(Vector2f(this->languageCardSprite.getLocalBounds().width - 8 * fs, 4 * fs));
+            shape->setSize(Vector2f(languageCardSprite.getLocalBounds().width - 8 * fs, 4 * fs));
             shape->setScale((float)windowWidth / 1920, 1);
             shape->setOrigin(shape->getLocalBounds().width / 2, 0);
             shape->setPosition(windowWidth / 2, (float)windowHeight * 320 / 1080 + 5 * fs * control);
@@ -284,26 +335,265 @@ protected:
         return false;
     }
 
+    bool isClickBetween(Vector2i click, RectangleShape object)
+    {
+        Vector2f iniPos = {object.getGlobalBounds().left, object.getGlobalBounds().top};
+        Vector2f finalPos = {object.getGlobalBounds().left + object.getGlobalBounds().width, object.getGlobalBounds().top + object.getGlobalBounds().height};
+        if (click.x >= iniPos.x && click.y >= iniPos.y && click.x <= finalPos.x && click.y <= finalPos.y)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool isClickBetween(Vector2i click, Text object)
+    {
+        Vector2f iniPos = {object.getGlobalBounds().left, object.getGlobalBounds().top};
+        Vector2f finalPos = {object.getGlobalBounds().left + object.getGlobalBounds().width, object.getGlobalBounds().top + object.getGlobalBounds().height};
+        if (click.x >= iniPos.x && click.y >= iniPos.y && click.x <= finalPos.x && click.y <= finalPos.y)
+        {
+            return true;
+        }
+        return false;
+    }
+
 public:
     SceneTemp(){};
+
+    static void defTextures(Vector2u windowSize)
+    {
+        // Window variables
+        windowWidth = windowSize.x;
+        windowHeight = windowSize.y;
+
+        // Creating a scale to font size (16px - 1080p)
+        fs = (int)(windowHeight / 67.5);
+
+        textureOffset = 32;
+        flagsTextOffset = 64;
+
+        musica.openFromFile("src/assets/sounds/Hardmoon_-_Deep_space.ogg");
+        musica.setVolume(65.f);
+        musica.setLoop(true);
+        musica.play();
+
+        shootBuffer.loadFromFile("src/assets/sounds/shoot.ogg");
+        shootSound.setBuffer(shootBuffer);
+
+        hitBuffer.loadFromFile("src/assets/sounds/hitSound.flac");
+        hitSound.setBuffer(hitBuffer);
+
+        explodeBuffer.loadFromFile("src/assets/sounds/explosionSound.flac");
+        explodeSound.setBuffer(explodeBuffer);
+
+        // Game Main Texture
+        mainTexture.loadFromFile("src/assets/sprites.png");
+
+        // Flags texture
+        flagsTexture.loadFromFile("src/assets/flags.png");
+
+        // Fonte initialization
+        fontAnteb.loadFromFile("src/assets/fonts/Anteb-Regular.ttf");
+        fontBlanka.loadFromFile("src/assets/fonts/Blanka-Regular.otf");
+        fontMontserrat.loadFromFile("src/assets/fonts/Montserrat.OTF");
+        fontJedi.loadFromFile("src/assets/fonts/STARJEDI.TTF");
+
+        // Background
+        menuBgTx.loadFromFile("src/assets/menuBackground.png");
+        menuBgSprite.setTexture(menuBgTx);
+        menuBgSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+        menuBgSprite.setOrigin(menuBgSprite.getLocalBounds().width / 2, menuBgSprite.getLocalBounds().height / 2);
+        menuBgSprite.setPosition(windowWidth / 2, windowHeight / 2);
+
+        // Start Button
+        btnSprite.setTexture(mainTexture);
+        btnSprite.setTextureRect(IntRect(0, 3 * textureOffset, 9 * textureOffset, 3 * textureOffset));
+        btnSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+        btnSprite.setOrigin(btnSprite.getLocalBounds().width / 2, btnSprite.getLocalBounds().height / 2);
+        btnSprite.setPosition(windowWidth * 50 / 100, windowHeight * 78 / 100);
+
+        // Settings Button
+        settingsSprite.setTexture(mainTexture);
+        settingsSprite.setTextureRect(IntRect(4 * textureOffset, 0, 2 * textureOffset, 2 * textureOffset));
+        settingsSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+        settingsSprite.setOrigin(0, settingsSprite.getLocalBounds().height);
+        settingsSprite.setPosition(windowWidth * 2 / 100, windowHeight * 96 / 100);
+
+        // Quit Button
+        quitSprite.setTexture(mainTexture);
+        quitSprite.setTextureRect(IntRect(6 * textureOffset, 0, 2 * textureOffset, 2 * textureOffset));
+        quitSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+        quitSprite.setOrigin(quitSprite.getLocalBounds().width, quitSprite.getLocalBounds().height);
+        quitSprite.setPosition(windowWidth * 98 / 100, windowHeight * 96 / 100);
+
+        gameSinglePlayerSprite.setTexture(mainTexture);
+        gameSinglePlayerSprite.setTextureRect(IntRect(0, 6 * textureOffset, 13 * textureOffset, 13 * textureOffset));
+        gameSinglePlayerSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+        gameSinglePlayerSprite.setOrigin(gameSinglePlayerSprite.getLocalBounds().width / 2, gameSinglePlayerSprite.getLocalBounds().height / 2);
+        gameSinglePlayerSprite.setPosition(windowWidth * 1 / 3, windowHeight / 2);
+
+        gameMultiPlayerSprite.setTexture(mainTexture);
+        gameMultiPlayerSprite.setTextureRect(IntRect(13 * textureOffset, 6 * textureOffset, 13 * textureOffset, 13 * textureOffset));
+        gameMultiPlayerSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+        gameMultiPlayerSprite.setOrigin(gameMultiPlayerSprite.getLocalBounds().width / 2, gameMultiPlayerSprite.getLocalBounds().height / 2);
+        gameMultiPlayerSprite.setPosition(windowWidth * 2 / 3, windowHeight / 2);
+
+        // ---- Game background ----
+        gameBackgroundTx.loadFromFile("src/assets/gameBackground.png");
+        gameBackgroundSprite.setTexture(gameBackgroundTx);
+        gameBackgroundSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+        gameBackgroundSprite.setOrigin(gameBackgroundSprite.getLocalBounds().width / 2, gameBackgroundSprite.getLocalBounds().height / 2);
+        gameBackgroundSprite.setPosition(windowWidth / 2, windowHeight / 2);
+
+        // Game Screen reference
+        gameScreenReferenceTexture.loadFromFile("src/assets/gameScreen.png");
+        gameScreenReference.setTexture(gameScreenReferenceTexture);
+        gameScreenReference.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+        gameScreenReference.setOrigin(gameScreenReference.getLocalBounds().width / 2, gameScreenReference.getLocalBounds().height / 2);
+        gameScreenReference.setPosition(windowWidth / 2, windowHeight / 2);
+
+        //  Language change card
+        languageCardTx.loadFromFile("src/assets/languageCard.png");
+        languageCardSprite.setTexture(languageCardTx);
+        languageCardSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+        languageCardSprite.setOrigin(languageCardSprite.getLocalBounds().width / 2, languageCardSprite.getLocalBounds().height / 2);
+        languageCardSprite.setPosition(windowWidth / 2, windowHeight / 2);
+
+        // Language Back Button
+        languageBackButtonSprite.setTexture(mainTexture);
+        languageBackButtonSprite.setTextureRect(IntRect(2 * textureOffset, 0, 2 * textureOffset, 2 * textureOffset));
+        languageBackButtonSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
+        languageBackButtonSprite.setOrigin(languageBackButtonSprite.getLocalBounds().width / 2, languageBackButtonSprite.getLocalBounds().height / 2);
+        languageBackButtonSprite.setPosition(windowWidth * 33 / 100, windowHeight * 8 / 10);
+
+        // Win screen back button
+        endScreenBackButton.setTexture(mainTexture);
+        endScreenBackButton.setTextureRect(IntRect(10 * textureOffset, 0, 2 * textureOffset, 2 * textureOffset));
+        endScreenBackButton.setScale((float)windowWidth * 1.6 / 1920, (float)windowHeight * 1.6 / 1080);
+        endScreenBackButton.setOrigin(endScreenBackButton.getLocalBounds().width / 2, endScreenBackButton.getLocalBounds().height / 2);
+        endScreenBackButton.setPosition(windowWidth / 2 + 10 * fs, (windowHeight / 2) + (windowHeight / 2) * 1.3 / 5);
+
+        // Win play again button
+        endScreenPlayAgain.setTexture(mainTexture);
+        endScreenPlayAgain.setTextureRect(IntRect(8 * textureOffset, 0, 2 * textureOffset, 2 * textureOffset));
+        endScreenPlayAgain.setScale((float)windowWidth * 1.6 / 1920, (float)windowHeight * 1.6 / 1080);
+        endScreenPlayAgain.setOrigin(endScreenPlayAgain.getLocalBounds().width / 2, endScreenPlayAgain.getLocalBounds().height / 2);
+        endScreenPlayAgain.setPosition(windowWidth / 2 - 10 * fs, (windowHeight / 2) + (windowHeight / 2) * 1.3 / 5);
+
+        // Calculando o tamanho maximo do tabuleiro
+        boardSizePx = Vector2i(gameScreenReference.getLocalBounds().width * gameScreenReference.getScale().x / 2 - 2 * fs,
+                               gameScreenReference.getLocalBounds().height * gameScreenReference.getScale().y - 4 * fs);
+
+        // Standard Settings
+        bombsNumber = 50;
+        squaresCount = {10, 10};
+        boatsQuantity = {4, 3, 2, 1};
+
+        updateText();
+    };
 };
 
-/*//  Language change card
-    this->languageCardTx.loadFromFile("src/assets/languageCard.png");
-    this->languageCardSprite.setTexture(this->languageCardTx);
-    this->languageCardSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
-    this->languageCardSprite.setOrigin(this->languageCardSprite.getLocalBounds().width / 2, this->languageCardSprite.getLocalBounds().height / 2);
-    this->languageCardSprite.setPosition(this->windowWidth / 2, this->windowHeight / 2);*/
+int SceneTemp::windowWidth;
+int SceneTemp::windowHeight;
 
-/*s// Game Screen reference
-this->gameScreenReferenceTexture.loadFromFile("src/assets/gameScreen.png");
-this->gameScreenReference.setTexture(this->gameScreenReferenceTexture);
-this->gameScreenReference.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
-this->gameScreenReference.setOrigin(this->gameScreenReference.getLocalBounds().width / 2, this->gameScreenReference.getLocalBounds().height / 2);
-this->gameScreenReference.setPosition(this->windowWidth / 2, this->windowHeight / 2);*/
+Texture SceneTemp::mainTexture;
+int SceneTemp::textureOffset;
 
-// Fonte initialization
-// fontAnteb.loadFromFile("src/assets/fonts/Anteb-Regular.ttf");
-// fontBlanka.loadFromFile("src/assets/fonts/Blanka-Regular.otf");
-// fontJedi.loadFromFile("src/assets/fonts/STARJEDI.TTF");
-// fontMontserrat.loadFromFile("src/assets/fonts/Montserrat.OTF");
+Texture SceneTemp::menuBgTx;
+Sprite SceneTemp::menuBgSprite;
+
+Sprite SceneTemp::btnSprite;
+
+Sprite SceneTemp::settingsSprite;
+
+Sprite SceneTemp::quitSprite;
+
+Texture SceneTemp::languageCardTx;
+Sprite SceneTemp::languageCardSprite;
+
+Texture SceneTemp::gameBackgroundTx;
+Sprite SceneTemp::gameBackgroundSprite;
+
+Texture SceneTemp::gameScreenReferenceTexture;
+Sprite SceneTemp::gameScreenReference;
+
+Sprite SceneTemp::gameSinglePlayerSprite;
+Sprite SceneTemp::gameMultiPlayerSprite;
+
+Sprite SceneTemp::languageBackButtonSprite;
+
+Sprite SceneTemp::endScreenBackButton;
+Sprite SceneTemp::endScreenPlayAgain;
+
+Vector2i SceneTemp::mousePos;
+
+Font SceneTemp::fontAnteb;
+Font SceneTemp::fontBlanka;
+Font SceneTemp::fontJedi;
+Font SceneTemp::fontMontserrat;
+
+tinyxml2::XMLDocument SceneTemp::doc;
+Text SceneTemp::languageText;
+tinyxml2::XMLElement *SceneTemp::pLanguage;
+tinyxml2::XMLElement *SceneTemp::pLastLang;
+string SceneTemp::language;
+string SceneTemp::languageToUpper;
+
+string SceneTemp::bombsString;
+
+Texture SceneTemp::flagsTexture;
+int SceneTemp::flagsTextOffset;
+Sprite SceneTemp::countryFlagSprite;
+
+Texture SceneTemp::inUseTexture;
+Sprite SceneTemp::inDrawSprite;
+
+Text SceneTemp::titleText;
+Text SceneTemp::titleTextShadow;
+Text SceneTemp::languageTitleText;
+
+Text SceneTemp::codersText;
+Text SceneTemp::codersTextShadow;
+Text SceneTemp::bombsTextSettings;
+Text SceneTemp::boardWidthText;
+Text SceneTemp::boardHeightText;
+
+Text SceneTemp::twoBoatsTextTitle;
+Text SceneTemp::threeBoatsTextTitle;
+Text SceneTemp::fourBoatsTextTitle;
+Text SceneTemp::fiveBoatsTextTitle;
+Text SceneTemp::settingsTitle;
+
+Text SceneTemp::playerText;
+Text SceneTemp::congratulationsText;
+string SceneTemp::wonString;
+string SceneTemp::loseString;
+
+Music SceneTemp::musica;
+
+SoundBuffer SceneTemp::shootBuffer;
+Sound SceneTemp::shootSound;
+
+SoundBuffer SceneTemp::hitBuffer;
+Sound SceneTemp::hitSound;
+
+SoundBuffer SceneTemp::explodeBuffer;
+Sound SceneTemp::explodeSound;
+
+vector<RectangleShape *> SceneTemp::languageBackgrounds;
+vector<Text *> SceneTemp::languagesNames;
+
+int SceneTemp::fs;
+int SceneTemp::currentPlayer;
+
+int SceneTemp::bombsNumber;
+string SceneTemp::gameMode;
+Vector2i SceneTemp::boardSizePx;
+Vector2i SceneTemp::squaresCount;
+vector<int> SceneTemp::boatsQuantity;
+Text SceneTemp::boardText;
+Text SceneTemp::boatsText;
+
+float SceneTemp::leftBoarder;
+float SceneTemp::topBoarder;
+bool SceneTemp::win;

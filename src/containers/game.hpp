@@ -2,19 +2,19 @@
 #include "sceneTemp.hpp"
 #include <cmath>
 
-// #include <cwindows>
-#include <unistd.h>
+#if defined(__linux__)
+    #include <unistd.h> // sleep in Linux
+#elif _WIN32
+    #include <cwindows> // sleep in Windows
+#endif
 
 class Game : public SceneTemp
 {
 private:
     bool escPressed;
     vector<Player> Players;
-    Vector2i boardSizePx;
     Vector2f rectangleSize;
     Sprite square;
-    string gameMode;
-    Vector2i squaresCount;
     RenderWindow *pWindow;
 
     int currentPlayer = 0;
@@ -25,61 +25,27 @@ private:
 
     string bombsString;
     int bombsLeft;
-    int bombsNumber;
 
 public:
-    Game(){};
-    Game(Vector2u windowSize, string gameMode) //, Vector2i squaresCount, int bombsNumber)
+    Game()
     {
-        this->gameMode = gameMode;
-        this->squaresCount = {10, 10}; // parametro so tava com pregui
-        this->bombsNumber = 10;
-
-        this->bombsLeft = this->bombsNumber;
-
-        // Window variables
-        this->windowWidth = windowSize.x;
-        this->windowHeight = windowSize.y;
-
-        // Creating a scale to font size (16px - 1080p)
-        fs = (int)(windowHeight / 67.5);
-
-        // Game Main Texture
-        this->mainTexture.loadFromFile("src/assets/sprites.png");
-
-        // ---- Game background ----
-        gameBackgroundTx.loadFromFile("src/assets/gameBackground.png");
-        gameBackgroundSprite.setTexture(gameBackgroundTx);
-        gameBackgroundSprite.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
-        gameBackgroundSprite.setOrigin(gameBackgroundSprite.getLocalBounds().width / 2, gameBackgroundSprite.getLocalBounds().height / 2);
-        gameBackgroundSprite.setPosition(this->windowWidth / 2, this->windowHeight / 2);
-
-        // Game Screen reference
-        this->gameScreenReferenceTexture.loadFromFile("src/assets/gameScreen.png");
-        this->gameScreenReference.setTexture(this->gameScreenReferenceTexture);
-        this->gameScreenReference.setScale((float)windowWidth / 1920, (float)windowHeight / 1080);
-        this->gameScreenReference.setOrigin(this->gameScreenReference.getLocalBounds().width / 2, this->gameScreenReference.getLocalBounds().height / 2);
-        this->gameScreenReference.setPosition(this->windowWidth / 2, this->windowHeight / 2);
-
-        // Calculando o tamanho maximo do tabuleiro
-        boardSizePx = Vector2i(gameScreenReference.getLocalBounds().width * gameScreenReference.getScale().x / 2 - 2 * fs,
-                               gameScreenReference.getLocalBounds().height * gameScreenReference.getScale().y - 4 * fs);
+        bombsLeft = bombsNumber;
 
         if (gameMode == "SP")
         { // SinglePlayer
             Players.push_back(
-                Player(boardSizePx, squaresCount, &mainTexture, textureOffset, &gameScreenReference, fs));
+                Player(boatsQuantity, boardSizePx, squaresCount, &mainTexture, textureOffset, &gameScreenReference, fs));
         }
         else if (gameMode == "MP")
         { // Multiplayer
             for (int i = 0; i < 2; i++)
             {
                 Players.push_back(
-                    Player(boardSizePx, squaresCount, &mainTexture, textureOffset, &gameScreenReference, fs));
+                Player(boatsQuantity, boardSizePx, squaresCount, &mainTexture, textureOffset, &gameScreenReference, fs));
             }
         }
 
-        this->rectangleSize = {float((boardSizePx.x / squaresCount.x) - 2), float((boardSizePx.y / squaresCount.y) - 2)};
+        rectangleSize = {float((boardSizePx.x / squaresCount.x) - 2), float((boardSizePx.y / squaresCount.y) - 2)};
 
         square.setTexture(mainTexture);
         square.setTextureRect(IntRect(textureOffset, 2 * textureOffset, textureOffset, textureOffset));
@@ -87,13 +53,11 @@ public:
         square.setScale(Vector2f(
             (square.getScale().x / textureOffset) * (boardSizePx.x / squaresCount.x - 2),
             (square.getScale().y / textureOffset) * (boardSizePx.y / squaresCount.y - 2)));
-    
-        this->updateText();
     };
 
     void animate(Vector2i pos, RenderWindow *pWindow)
     {
-        // shootSound.play();
+        shootSound.play();
         Clock clock;
 
         float timeElapsed = clock.getElapsedTime().asSeconds();
@@ -171,7 +135,7 @@ public:
         lado = beanEnd.y - beanStart.y;
         hipotenusa = sqrt(baixo * baixo + lado * lado);
 
-        float angle = (asin(lado / hipotenusa) * 180 / 3.14159265);
+        float angle = (asin(lado / hipotenusa) * 180 / 3.14159265); // O Flavio saberia colocar mais 100 casa de cabeça, nmrl, nerd dms
 
         if (beanEnd.x < beanStart.x)
         {
@@ -191,7 +155,7 @@ public:
 
             // Desenhando o jogador atual na tela
             pWindow->draw(playerText);
-            Text currentPlayerText = createText("  0" + std::to_string(currentPlayer + 1), (playerText.getGlobalBounds().left + playerText.getGlobalBounds().width), playerText.getGlobalBounds().top, 4, Color::Black);
+            currentPlayerText = createText("  0" + std::to_string(currentPlayer + 1), (playerText.getGlobalBounds().left + playerText.getGlobalBounds().width), playerText.getGlobalBounds().top - fs, 4, Color::Black);
             pWindow->draw(currentPlayerText);
 
             // Desenhando quantidade de bombas restantes na tela
@@ -237,15 +201,15 @@ public:
 
     void update(Engine *pEngine)
     {
-        this->escPressed = false;
-        this->pWindow = pEngine->getWindow();
+        escPressed = false;
+        pWindow = pEngine->getWindow();
 
         if (Mouse::isButtonPressed(Mouse::Left))
-            this->mousePos = Mouse::getPosition(*pEngine->getWindow());
+            mousePos = Mouse::getPosition(*pEngine->getWindow());
         else
-            this->mousePos = {0, 0};
+            mousePos = {0, 0};
         if (Keyboard::isKeyPressed(Keyboard::Escape))
-            this->escPressed = true;
+            escPressed = true;
 
         if (escPressed)
         {
@@ -287,15 +251,17 @@ public:
                     {
                     case 1:
                         // Acertou mas não destruiu
-                        // hitSound.play();
+                        hitSound.play();
                         break;
                     case 2:
                         // Destruiu
-                        // explodeSound.play();
+                        explodeSound.play();
                         break;
                     case 3:
                         // Ganhou
-                        // controlPanel = 5;
+                        win = true;
+                        pEngine->setCurrentScene("finalScreen");
+                        return;
                         break;
                     }
 
@@ -307,16 +273,18 @@ public:
                     switch (Players[currentPlayer].hit(Vector2i(i, j)))
                     {
                     case 1:
-                        // hitSound.play();
                         //  Acertou mas não destruiu
+                        hitSound.play();
                         break;
                     case 2:
                         // Destruiu
-                        // explodeSound.play();
+                        explodeSound.play();
                         break;
                     case 3:
                         // Ganhou
-                        // controlPanel = 5;
+                        win = true;
+                        pEngine->setCurrentScene("finalScreen");
+                        return;
                         break;
                     }
 
@@ -337,7 +305,7 @@ public:
 
         // Desenhando o jogador atual na tela
         pWindow->draw(playerText);
-        currentPlayerText = createText("  0" + std::to_string(currentPlayer + 1), (playerText.getGlobalBounds().left + playerText.getGlobalBounds().width), playerText.getGlobalBounds().top, 4, Color::Black);
+        currentPlayerText = createText("  0" + std::to_string(currentPlayer + 1), (playerText.getGlobalBounds().left + playerText.getGlobalBounds().width), playerText.getGlobalBounds().top - fs, 4, Color::Black);
         pWindow->draw(currentPlayerText);
 
         // Desenhando quantidade de bombas restantes na tela
@@ -353,8 +321,7 @@ public:
 
             // Desenhando o jogador atual na tela
             pWindow->draw(playerText);
-            cout << (playerText.getGlobalBounds().width) << endl;
-            Text currentPlayerText = createText("  0" + std::to_string(currentPlayer + 1), (playerText.getGlobalBounds().left + playerText.getGlobalBounds().width), playerText.getGlobalBounds().top, 4, Color::Black);
+            currentPlayerText = createText("  0" + std::to_string(currentPlayer + 1), (playerText.getGlobalBounds().left + playerText.getGlobalBounds().width), playerText.getGlobalBounds().top - fs, 4, Color::Black);
             pWindow->draw(currentPlayerText);
 
             // Desenhando quantidade de bombas restantes na tela
@@ -404,37 +371,9 @@ public:
 
             if (bombsLeft <= 0)
             {
-                // controlPanel = 6;
+                win = false;
+                pEngine->setCurrentScene("finalScreen");
             }
         }
-    };
-
-    void render(sf::RenderWindow *pWindow){
-        /*
-           if (Players.empty())
-               return;
-
-           pWindow->draw(this->gameScreenReference);
-           pWindow->draw(this->gameBackgroundSprite);
-
-           for (int i = 0; i < squaresCount.x; i++)
-           { // Desenhando quadrados na tela e checando hitbox
-               for (int j = 0; j < squaresCount.y; j++)
-               {
-                   // Desenhando na tela
-                   square.setColor(Color(255, 255, 255, 255));
-
-                   square.setPosition((int)gameScreenReference.getGlobalBounds().left + 7 * fs + i * (rectangleSize.x + 2), (int)gameScreenReference.getGlobalBounds().top + 2 * fs + j * (rectangleSize.y + 2));
-
-                   // Se ja tiver sido clicado, muda a cor e continua a desenhar
-                   if ((gameMode == "SP" && Players.at(currentPlayer).board[i][j]) || (gameMode == "MP" && Players.at(!currentPlayer).board[i][j]))
-                   {
-                       square.setColor(Color(255, 255, 255, 200));
-                   }
-
-                   pWindow->draw(square);
-               }
-           }
-       */
     };
 };
